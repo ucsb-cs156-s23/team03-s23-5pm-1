@@ -56,15 +56,12 @@ public class RestaurantController extends ApiController {
     public Restaurant postRestaurant(
         @ApiParam("phoneNumber") @RequestParam int phoneNumber,
         @ApiParam("city") @RequestParam String city,
-        @ApiParam("state") @RequestParam String state
-        )
-        {
-
+        @ApiParam("state") @RequestParam String state)
+    {
         Restaurant restaurant = new Restaurant();
         restaurant.setPhoneNumber(phoneNumber);
         restaurant.setCity(city);
         restaurant.setState(state);
-       
 
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
 
@@ -92,7 +89,6 @@ public class RestaurantController extends ApiController {
 
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Restaurant.class, id));
-
 
         restaurant.setPhoneNumber(incoming.getPhoneNumber());
         restaurant.setCity(incoming.getCity());

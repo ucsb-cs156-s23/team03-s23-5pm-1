@@ -139,9 +139,9 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
 
                 Restaurant restaurant2 = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
+                                .phoneNumber(511)
+                                .city("New York")
+                                .state("NY")
                                 .build();           
 
                 ArrayList<Restaurant> expectedDates = new ArrayList<>();
@@ -238,7 +238,6 @@ public class RestaurantControllerTests extends ControllerTestCase {
         public void admin_can_edit_an_existing_restaurant() throws Exception {
                 // arrange
 
-
                 Restaurant restaurantOrig = Restaurant.builder()
                                 .phoneNumber(911)
                                 .city("Goleta")
@@ -246,10 +245,10 @@ public class RestaurantControllerTests extends ControllerTestCase {
                                 .build();
 
                 Restaurant restaurantEdited = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
-                                .build();
+                                .phoneNumber(511)
+                                .city("New York")
+                                .state("NY")
+                                .build();              
 
                 String requestBody = mapper.writeValueAsString(restaurantEdited);
 
