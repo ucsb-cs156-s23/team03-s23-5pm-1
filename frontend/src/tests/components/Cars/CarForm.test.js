@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
 
-import CarForm from "main/components/Cars/CarForms";
+import CarForm from "main/components/Cars/CarForm";
 import { carFixtures } from "fixtures/carFixtures";
 
 import { QueryClient, QueryClientProvider } from "react-query";

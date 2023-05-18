@@ -38,14 +38,14 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             )}
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="name">Name</Form.Label>
+                <Form.Label htmlFor="make">Make</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-name"}
-                    id="name"
+                    data-testid={testIdPrefix + "-make"}
+                    id="make"
                     type="text"
-                    isInvalid={Boolean(errors.name)}
-                    {...register("name", {
-                        required: "Name is required.",
+                    isInvalid={Boolean(errors.make)}
+                    {...register("make", {
+                        required: "Make is required.",
                         maxLength : {
                             value: 30,
                             message: "Max length 30 characters"
@@ -53,25 +53,42 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.name?.message}
+                    {errors.make?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="description">Description</Form.Label>
+                <Form.Label htmlFor="model">Model</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-description"}
-                    id="description"
+                    data-testid={testIdPrefix + "-model"}
+                    id="model"
                     type="text"
                     isInvalid={Boolean(errors.description)}
-                    {...register("description", {
-                        required: "Description is required."
+                    {...register("model", {
+                        required: "Model is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.description?.message}
+                    {errors.model?.message}
                 </Form.Control.Feedback>
             </Form.Group>
+
+            <Form.Group className="mb-3" >
+                <Form.Label htmlFor="year">Year</Form.Label>
+                <Form.Control
+                    data-testid={testIdPrefix + "-year"}
+                    id="year"
+                    type="text"
+                    isInvalid={Boolean(errors.description)}
+                    {...register("year", {
+                        required: "Year is required."
+                    })}
+                />
+                <Form.Control.Feedback type="invalid">
+                    {errors.year?.message}
+                </Form.Control.Feedback>
+            </Form.Group>
+
 
 
             <Button

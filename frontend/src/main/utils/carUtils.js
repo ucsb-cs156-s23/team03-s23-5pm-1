@@ -72,7 +72,7 @@ const del = (id) => {
     return { carCollection: carCollection };
 };
 
-const carUtilities = {
+const carUtils = {
     get,
     getById,
     add,
@@ -80,4 +80,4 @@ const carUtilities = {
     del
 };
 
-export { carUtilities };
+export { carUtils };
