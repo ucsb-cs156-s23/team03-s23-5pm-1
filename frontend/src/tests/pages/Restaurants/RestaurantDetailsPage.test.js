@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import RestaurantDetailsPage from "main/pages/Restaurants/RestaurantDetailsPage";
+import RestaurantDetailsPage from "main/pages/Restaurants/RestaurantsDetailsPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 

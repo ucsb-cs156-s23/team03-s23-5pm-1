@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
-import RestaurantCreatePage from "main/pages/Restaurants/RestaurantCreatePage";
+import RestaurantCreatePage from "main/pages/Restaurants/RestaurantsCreatePage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import mockConsole from "jest-mock-console";
