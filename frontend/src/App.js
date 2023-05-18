@@ -11,6 +11,9 @@ import UCSBDatesIndexPage from "main/pages/UCSBDates/UCSBDatesIndexPage";
 import UCSBDatesCreatePage from "main/pages/UCSBDates/UCSBDatesCreatePage";
 import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 
+import CourseIndexPage from "main/pages/Courses/CourseIndexPage";
+import CourseCreatePage from "main/pages/Courses/CourseCreatePage";
+import CourseEditPage from "main/pages/Courses/CourseEditPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -43,6 +46,7 @@ function App() {
           hasRole(currentUser, "ROLE_USER") && (
             <>
               <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
+              <Route exact path="/course/list" element={<CourseIndexPage />} />
             </>
           )
         }
@@ -51,6 +55,8 @@ function App() {
             <>
               <Route exact path="/ucsbdates/edit/:id" element={<UCSBDatesEditPage />} />
               <Route exact path="/ucsbdates/create" element={<UCSBDatesCreatePage />} />
+              <Route exact path="/course/edit/:id" element={<CourseEditPage />} />
+              <Route exact path="/course/create" element={<CourseCreatePage />} />
             </>
           )
         }
