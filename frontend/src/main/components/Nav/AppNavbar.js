@@ -92,6 +92,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                 )
               }
             </Nav>
+            
             <Nav className="ml-auto">
               {
                 currentUser && currentUser.loggedIn ? (
