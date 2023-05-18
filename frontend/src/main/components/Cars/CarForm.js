@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 
-function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
     const navigate = useNavigate();
     
@@ -38,14 +38,14 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
             )}
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="make">Make</Form.Label>
+                <Form.Label htmlFor="name">Name</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-make"}
-                    id="make"
+                    data-testid={testIdPrefix + "-name"}
+                    id="name"
                     type="text"
-                    isInvalid={Boolean(errors.make)}
-                    {...register("make", {
-                        required: "Make is required.",
+                    isInvalid={Boolean(errors.name)}
+                    {...register("name", {
+                        required: "Name is required.",
                         maxLength : {
                             value: 30,
                             message: "Max length 30 characters"
@@ -53,42 +53,25 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.make?.message}
+                    {errors.name?.message}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="model">Model</Form.Label>
+                <Form.Label htmlFor="description">Description</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-model"}
-                    id="model"
+                    data-testid={testIdPrefix + "-description"}
+                    id="description"
                     type="text"
                     isInvalid={Boolean(errors.description)}
-                    {...register("model", {
-                        required: "Model is required."
+                    {...register("description", {
+                        required: "Description is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.model?.message}
+                    {errors.description?.message}
                 </Form.Control.Feedback>
             </Form.Group>
-
-            <Form.Group className="mb-3" >
-                <Form.Label htmlFor="year">Year</Form.Label>
-                <Form.Control
-                    data-testid={testIdPrefix + "-year"}
-                    id="year"
-                    type="text"
-                    isInvalid={Boolean(errors.description)}
-                    {...register("year", {
-                        required: "Year is required."
-                    })}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {errors.year?.message}
-                </Form.Control.Feedback>
-            </Form.Group>
-
 
 
             <Button
@@ -110,4 +93,4 @@ function RestaurantForm({ initialContents, submitAction, buttonLabel = "Create" 
     )
 }
 
-export default RestaurantForm;
+export default CarForm;
