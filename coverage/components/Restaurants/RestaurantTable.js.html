@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for components/Cars/CarTable.js</title>
+    <title>Code coverage report for components/Restaurants/RestaurantTable.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/Cars</a> CarTable.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">components/Restaurants</a> RestaurantTable.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -126,17 +126,13 @@
 <a name='L61'></a><a href='#L61'>61</a>
 <a name='L62'></a><a href='#L62'>62</a>
 <a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L64'></a><a href='#L64'>64</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -177,10 +173,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,35 +189,35 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">&nbsp;
-import React from "react";
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useNavigate } from "react-router-dom";
-import { carUtils } from "main/utils/carUtils";
+import { restaurantUtils } from "main/utils/restaurantUtils";
 &nbsp;
-const showCell = (cell) =&gt; JSON.stringify(cell.row.values)
+const showCell = (cell) =&gt; JSON.stringify(cell.row.values);
+&nbsp;
 &nbsp;
 const defaultDeleteCallback = async (cell) =&gt; {
     console.log(`deleteCallback: ${showCell(cell)})`);
-    carUtils.del(cell.row.values.id);
+    restaurantUtils.del(cell.row.values.id);
 }
 &nbsp;
-export default function CarTable({
-    cars,
+export default function RestaurantTable({
+    restaurants,
     deleteCallback = defaultDeleteCallback,
     showButtons = true,
-    testIdPrefix = "CarTable" }) {
+    testIdPrefix = "RestaurantTable" }) {
 &nbsp;
     const navigate = useNavigate();
  
     const editCallback = (cell) =&gt; {
         console.log(`editCallback: ${showCell(cell)})`);
-        navigate(`/cars/edit/${cell.row.values.id}`)
+        navigate(`/restaurants/edit/${cell.row.values.id}`)
     }
 &nbsp;
     const detailsCallback = (cell) =&gt; {
         console.log(`detailsCallback: ${showCell(cell)})`);
-        navigate(`/cars/details/${cell.row.values.id}`)
+        navigate(`/restaurants/details/${cell.row.values.id}`)
     }
 &nbsp;
     const columns = [
@@ -235,16 +227,12 @@ export default function CarTable({
         },
 &nbsp;
         {
-            Header: 'Make',
-            accessor: 'make',
+            Header: 'Name',
+            accessor: 'name',
         },
         {
-            Header: 'Model',
-            accessor: 'model',
-        },
-        {
-            Header: 'Year',
-            accessor: 'year',
+            Header: 'Description',
+            accessor: 'description',
         }
     ];
 &nbsp;
@@ -258,7 +246,7 @@ export default function CarTable({
     const columnsToDisplay = showButtons ? buttonColumns : columns;
 &nbsp;
     return &lt;OurTable
-        data={cars}
+        data={restaurants}
         columns={columnsToDisplay}
         testid={testIdPrefix}
     /&gt;;
@@ -271,7 +259,7 @@ export { showCell };</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed May 17 2023 19:45:43 GMT-0700 (Pacific Daylight Time)
+                at Thu May 18 2023 11:53:52 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
