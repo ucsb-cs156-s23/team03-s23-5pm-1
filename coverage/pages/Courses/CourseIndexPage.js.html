@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/Restaurants/RestaurantsIndexPage.js</title>
+    <title>Code coverage report for pages/Courses/CourseIndexPage.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Restaurants</a> RestaurantsIndexPage.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">pages/Courses</a> CourseIndexPage.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -96,7 +96,15 @@
 <a name='L31'></a><a href='#L31'>31</a>
 <a name='L32'></a><a href='#L32'>32</a>
 <a name='L33'></a><a href='#L33'>33</a>
-<a name='L34'></a><a href='#L34'>34</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,33 +140,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
 import Button from 'react-bootstrap/Button';
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
-import { restaurantUtils } from 'main/utils/restaurantUtils';
+import CourseTable from 'main/components/Courses/CourseTable';
+import { courseUtilities } from 'main/utils/courseUtilities';
 import { useNavigate, Link } from 'react-router-dom';
+import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
 &nbsp;
-export default function RestaurantIndexPage() {
+export default function CourseIndexPage() {
 &nbsp;
     const navigate = useNavigate();
 &nbsp;
-    const restaurantCollection = restaurantUtils.get();
-    const restaurants = restaurantCollection.restaurants;
+    const courseCollection = courseUtilities.get();
+    const courses = courseCollection.courses;
 &nbsp;
     const showCell = (cell) =&gt; JSON.stringify(cell.row.values);
 &nbsp;
     const deleteCallback = async (cell) =&gt; {
-        console.log(`RestaurantIndexPage deleteCallback: ${showCell(cell)})`);
-        restaurantUtils.del(cell.row.values.id);
-        navigate("/restaurants");
+        console.log(`CourseIndexPage deleteCallback: ${showCell(cell)})`);
+        courseUtilities.del(cell.row.values.id);
+        navigate("/courses");
     }
 &nbsp;
     return (
         &lt;BasicLayout&gt;
             &lt;div className="pt-2"&gt;
-                &lt;Button style={{ float: "right" }} as={Link} to="/restaurants/create"&gt;
-                    Create Restaurant
+                &lt;Button style={{ float: "right" }} as={Link} to="/courses/create"&gt;
+                    Create Course
                 &lt;/Button&gt;
-                &lt;h1&gt;Restaurants&lt;/h1&gt;
-                &lt;RestaurantTable restaurants={restaurants} deleteCallback={deleteCallback} /&gt;
+                &lt;h1&gt;Courses&lt;/h1&gt;
+                &lt;CourseTable courses={courses} deleteCallback={deleteCallback} /&gt;
             &lt;/div&gt;
         &lt;/BasicLayout&gt;
     )
