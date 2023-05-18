@@ -1,5 +1,5 @@
 import React from 'react';
-import CarForm from "main/components/Cars/CarForm"
+import CarForm from "main/components/Cars/CarForms"
 import { carFixtures } from 'fixtures/carFixtures';
 
 export default {
