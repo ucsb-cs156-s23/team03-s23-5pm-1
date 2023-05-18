@@ -4,6 +4,10 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CourseTable from 'main/components/Courses/CourseTable';
 import { courseUtilities } from 'main/utils/courseUtilities';
 import { useNavigate, Link } from 'react-router-dom';
+import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
 
 export default function CourseIndexPage() {
 
