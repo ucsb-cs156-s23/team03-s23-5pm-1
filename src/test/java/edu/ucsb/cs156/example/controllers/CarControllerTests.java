@@ -246,9 +246,9 @@ public class CarControllerTests extends ControllerTestCase {
                                 .build();
 
                 Car carEdited = Car.builder()
-                                .make("Ford")
-                                .model("Mustang")
-                                .year(1970)
+                                .make("Toyota")
+                                .model("Prius")
+                                .year(2002)
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(carEdited);

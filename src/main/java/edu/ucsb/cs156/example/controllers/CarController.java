@@ -6,7 +6,6 @@ import edu.ucsb.cs156.example.repositories.CarRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -27,7 +26,6 @@ import javax.validation.Valid;
 @Api(description = "Cars")
 @RequestMapping("/api/cars")
 @RestController
-@Slf4j
 
 public class CarController extends ApiController {
 
