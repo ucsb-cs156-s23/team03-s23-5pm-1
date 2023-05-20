@@ -29,11 +29,8 @@ function App() {
     <BrowserRouter basename="/team01-s23-5pm-1">
       <Routes>
         <Route path="/storybook-static" onEnter={reload}/>
-        <Route exact path="/" element={<HomePage />} />
 
-        <Route exact path="/towns/AvilaBeach" element={<AvilaBeachPage />} />
-        <Route exact path="/towns/LosAlamos" element={<LosAlamosPage />} />
-        <Route exact path="/towns/ArroyoGrande" element={<ArroyoGrandePage />} />
+        
         
         <Route exact path="/restaurants/create" element={<RestaurantCreatePage />} />
         <Route exact path="/restaurants/edit/:id" element={<RestaurantEditPage />} />
