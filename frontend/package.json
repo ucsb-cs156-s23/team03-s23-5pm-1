@@ -69,7 +69,8 @@
       "testing-library/no-node-access": "off",
       "import/no-anonymous-default-export": "off",
       "react-hooks/exhaustive-deps": "off",
-      "testing-library/no-unnecessary-act": "off"
+      "testing-library/no-unnecessary-act": "off",
+      "testing-library/prefer-find-by": "off"
     }
   },
   "browserslist": {
