@@ -2,7 +2,7 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
 import { carUtils }  from 'main/utils/carUtils';
-import CarForm from 'main/components/Cars/CarForm';
+import CarForm from 'main/components/Cars/CarForms';
 import { useNavigate } from 'react-router-dom'
 
 
