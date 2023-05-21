@@ -16,6 +16,11 @@ import CourseIndexPage from "main/pages/Courses/CourseIndexPage";
 import CourseCreatePage from "main/pages/Courses/CourseCreatePage";
 import CourseEditPage from "main/pages/Courses/CourseEditPage";
 
+import CarCreatePage from "main/pages/Cars/CarCreatePage";
+import CarEditPage from "main/pages/Cars/CarEditPage";
+import CarIndexPage from "main/pages/Cars/CarIndexPage";
+import CarDetailsPage from "main/pages/Cars/CarDetailsPage";
+
 import RestaurantsIndexPage from "main/pages/Restaurants/RestaurantsIndexPage";
 import RestaurantsCreatePage from "main/pages/Restaurants/RestaurantsCreatePage";
 import RestaurantsEditPage from "main/pages/Restaurants/RestaurantsEditPage";
@@ -57,6 +62,9 @@ function App() {
 
               <Route exact path="/restaurants/list" element={<RestaurantsIndexPage />} />
 
+              <Route exact path="/cars/list" element={<CarIndexPage />} />
+
+
             </>
           )
         }
@@ -71,6 +79,9 @@ function App() {
 
               <Route exact path="/restaurants/edit/:id" element={<RestaurantsEditPage />} />
               <Route exact path="/restaurants/create" element={<RestaurantsCreatePage />} />
+
+              <Route exact path="/cars/edit/:id" element={<CarEditPage />} />
+              <Route exact path="/cars/create" element={<CarCreatePage />} />
 
             </>
           )

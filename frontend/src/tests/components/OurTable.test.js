@@ -44,29 +44,29 @@ describe("OurTable tests", () => {
     });
 
     test("The button appears in the table", async () => {
-        const {getByTestId, findByTestId} = render(
+        const {getByTestId} = render(
             <OurTable columns={columns} data={threeRows} />
         );
 
-        await findByTestId("testId-cell-row-0-col-Click-button");
+        await waitFor(()=> expect(getByTestId("testId-cell-row-0-col-Click-button")).toBeInTheDocument() );
         const button = getByTestId("testId-cell-row-0-col-Click-button");
         fireEvent.click(button);
         await waitFor(()=>expect(clickMeCallback).toBeCalledTimes(1));
     });
 
     test("default testid is testId", async () => {
-        const {getByTestId, findByTestId } = render(
+        const {getByTestId } = render(
             <OurTable columns={columns} data={threeRows} />
         );
-        await findByTestId("testid-header-col1");
+        await waitFor( ()=> expect(getByTestId("testid-header-col1")).toBeInTheDocument() );
     });
 
     test("click on a header and a sort caret should appear", async () => {
-        const {getByTestId, getByText, findByTestId, findByText } = render(
+        const {getByTestId, getByText } = render(
             <OurTable columns={columns} data={threeRows} testid={"sampleTestId"} />
         );
 
-        await findByTestId("sampleTestId-header-col1");
+        await waitFor( ()=> expect(getByTestId("sampleTestId-header-col1")).toBeInTheDocument() );
         const col1Header = getByTestId("sampleTestId-header-col1");
 
         const col1SortCarets = getByTestId("sampleTestId-header-col1-sort-carets");
@@ -76,10 +76,10 @@ describe("OurTable tests", () => {
         expect(col1Row0).toHaveTextContent("Hello");
 
         fireEvent.click(col1Header);
-        await findByText("🔼");
+        await waitFor( ()=> expect(getByText("🔼")).toBeInTheDocument() );
 
         fireEvent.click(col1Header);
-        await findByText("🔽");
+        await waitFor( ()=> expect(getByText("🔽")).toBeInTheDocument() );
 
         
 
