@@ -41,11 +41,11 @@ export default function CourseTable({
         },
         {
             Header: 'Course Number',
-            accessor: 'courseNumber',
+            accessor: 'number',
         },
         {
-            Header: 'Department',
-            accessor: 'Department',
+            Header: 'Instructor',
+            accessor: 'instructor',
         }
     ];
 

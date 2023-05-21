@@ -15,8 +15,8 @@ jest.mock('react-router-dom', () => ({
 describe("CourseTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id","Course Title","Course Number", "Department"];
-  const expectedFields = ["id", "title", "courseNumber", "Department"];
+  const expectedHeaders = ["id","Course Title","Course Number", "Instructor"];
+  const expectedFields = ["id", "title", "number", "instructor"];
   const testId = "CourseTable";
 
   test("showCell function works properly", () => {
@@ -141,7 +141,7 @@ describe("CourseTable tests", () => {
     // assert - check that the console.log was called with the expected message
     expect(console.log).toHaveBeenCalled();
     const message = console.log.mock.calls[0][0];
-    const expectedMessage = `editCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","courseNumber":"59261","Department":"Electrical and Computer Engineering"})`;
+    const expectedMessage = `editCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
     expect(message).toMatch(expectedMessage);
     restoreConsole();
   });
@@ -175,7 +175,7 @@ describe("CourseTable tests", () => {
     // assert - check that the console.log was called with the expected message
     expect(console.log).toHaveBeenCalled();
     const message = console.log.mock.calls[0][0];
-    const expectedMessage = `detailsCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","courseNumber":"59261","Department":"Electrical and Computer Engineering"})`;
+    const expectedMessage = `detailsCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
     expect(message).toMatch(expectedMessage);
     restoreConsole();
   });
@@ -206,7 +206,7 @@ describe("CourseTable tests", () => {
      // assert - check that the console.log was called with the expected message
      await(waitFor(() => expect(console.log).toHaveBeenCalled()));
      const message = console.log.mock.calls[0][0];
-     const expectedMessage = `deleteCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","courseNumber":"59261","Department":"Electrical and Computer Engineering"})`;
+     const expectedMessage = `deleteCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
      expect(message).toMatch(expectedMessage);
      restoreConsole();
   });

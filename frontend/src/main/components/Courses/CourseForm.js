@@ -3,7 +3,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
 
-function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+function CourseForm({ initialCourse, submitAction, buttonLabel = "Create" }) {
 
     const navigate = useNavigate();
     
@@ -13,34 +13,38 @@ function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
         formState: { errors },
         handleSubmit,
     } = useForm(
-        { defaultValues: initialContents || {}, }
+        { defaultValues: initialCourse || {}, }
     );
     // Stryker enable all
-   
-    const testIdPrefix = "CourseForm";
+    
+    // Stryker disable next-line Regex
+    const isodate_regex = /(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)/i;
 
+    // Stryker disable next-line all
+    const yyyyq_regex = /((19)|(20))\d{2}[1-4]/i; // Accepts from 1900-2099 followed by 1-4.  Close enough.
+    console.log(initialCourse);
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
 
-            {initialContents && (
+            {initialCourse && (
                 <Form.Group className="mb-3" >
                     <Form.Label htmlFor="id">Id</Form.Label>
                     <Form.Control
-                        data-testid={testIdPrefix + "-id"}
+                        data-testid="CourseForm-id"
                         id="id"
                         type="text"
                         {...register("id")}
-                        value={initialContents.id}
+                        value={initialCourse.id}
                         disabled
                     />
                 </Form.Group>
             )}
-
+            
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="title">Title</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-title"}
+                    data-testid={"CourseForm-title"}
                     id="title"
                     type="text"
                     isInvalid={Boolean(errors.title)}
@@ -58,13 +62,13 @@ function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="courseNumber">Course Number</Form.Label>
+                <Form.Label htmlFor="number">Course Number</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-courseNumber"}
-                    id="courseNumber"
+                    data-testid={"CourseForm-number"}
+                    id="number"
                     type="text"
-                    isInvalid={Boolean(errors.course_number)}
-                    {...register("courseNumber", {
+                    isInvalid={Boolean(errors.number)}
+                    {...register("number", {
                         required: "Course Number is required."
                     })}
                 />
@@ -74,14 +78,14 @@ function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             </Form.Group>
 
             <Form.Group className="mb-3" >
-                <Form.Label htmlFor="Department">Department</Form.Label>
+                <Form.Label htmlFor="instructor">Instructor</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-Department"}
-                    id="Department"
+                    data-testid={"CourseForm-instructor"}
+                    id="instructor"
                     type="text"
-                    isInvalid={Boolean(errors.department)}
-                    {...register("Department", {
-                        required: "Department is required."
+                    isInvalid={Boolean(errors.instructor)}
+                    {...register("instructor", {
+                        required: "Instructor is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -92,14 +96,14 @@ function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
             <Button
                 type="submit"
-                data-testid={testIdPrefix + "-submit"}
+                data-testid={"CourseForm-submit"}
             >
                 {buttonLabel}
             </Button>
             <Button
                 variant="Secondary"
                 onClick={() => navigate(-1)}
-                data-testid={testIdPrefix + "-cancel"}
+                data-testid={"CourseForm-cancel"}
             >
                 Cancel
             </Button>
