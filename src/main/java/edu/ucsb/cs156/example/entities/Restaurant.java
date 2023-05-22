@@ -21,10 +21,8 @@ public class Restaurant {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
-  private int phoneNumber;
-  private String city;
-  private String state;
+  private String name;
+  private String description;
 }
 
 
