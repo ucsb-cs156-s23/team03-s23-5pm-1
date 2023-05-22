@@ -60,10 +60,10 @@ describe("CourseTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("ENGL 24 - LOCAL AND GLOBAL");
 
     const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
@@ -100,10 +100,10 @@ describe("CourseTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("ENGL 24 - LOCAL AND GLOBAL");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
@@ -126,7 +126,7 @@ describe("CourseTable tests", () => {
     );
 
     // assert - check that the expected content is rendered
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
     const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
@@ -136,12 +136,12 @@ describe("CourseTable tests", () => {
     fireEvent.click(editButton);
 
     // assert - check that the navigate function was called with the expected path
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/edit/2'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/edit/1'));
 
     // assert - check that the console.log was called with the expected message
     expect(console.log).toHaveBeenCalled();
     const message = console.log.mock.calls[0][0];
-    const expectedMessage = `editCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
+    const expectedMessage = `editCallback: {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
     expect(message).toMatch(expectedMessage);
     restoreConsole();
   });
@@ -160,7 +160,7 @@ describe("CourseTable tests", () => {
     );
 
     // assert - check that the expected content is rendered
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
     const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
@@ -170,12 +170,12 @@ describe("CourseTable tests", () => {
     fireEvent.click(detailsButton);
 
     // assert - check that the navigate function was called with the expected path
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/details/2'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/details/1'));
 
     // assert - check that the console.log was called with the expected message
     expect(console.log).toHaveBeenCalled();
     const message = console.log.mock.calls[0][0];
-    const expectedMessage = `detailsCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
+    const expectedMessage = `detailsCallback: {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
     expect(message).toMatch(expectedMessage);
     restoreConsole();
   });
@@ -194,7 +194,7 @@ describe("CourseTable tests", () => {
     );
 
     // assert - check that the expected content is rendered
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
     const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
@@ -206,7 +206,7 @@ describe("CourseTable tests", () => {
      // assert - check that the console.log was called with the expected message
      await(waitFor(() => expect(console.log).toHaveBeenCalled()));
      const message = console.log.mock.calls[0][0];
-     const expectedMessage = `deleteCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
+     const expectedMessage = `deleteCallback: {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
      expect(message).toMatch(expectedMessage);
      restoreConsole();
   });

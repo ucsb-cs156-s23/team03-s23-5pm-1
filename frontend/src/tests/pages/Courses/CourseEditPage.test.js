@@ -118,7 +118,7 @@ describe("CourseEditPage tests", () => {
 
             expect(idField).toHaveValue("17");
             expect(titleField).toHaveValue("CS 156");
-            expect(numberField).toHaveValue("1234");
+            expect(numberField).toHaveValue(1234);
             expect(instructorField).toHaveValue("Phil Conrad");
         });
 
@@ -144,13 +144,13 @@ describe("CourseEditPage tests", () => {
 
             expect(idField).toHaveValue("17");
             expect(titleField).toHaveValue("CS 156");
-            expect(numberField).toHaveValue("1234");
+            expect(numberField).toHaveValue(1234);
             expect(instructorField).toHaveValue("Phil Conrad");
 
             expect(submitButton).toBeInTheDocument();
 
             fireEvent.change(titleField, { target: { value: 'CS 130b' } })
-            fireEvent.change(numberField, { target: { value: '2345' } })
+            fireEvent.change(numberField, { target: { value: 2345 } })
             fireEvent.change(instructorField, { target: { value: "Daniel Lohkstanov" } })
 
             fireEvent.click(submitButton);
@@ -163,7 +163,7 @@ describe("CourseEditPage tests", () => {
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 title: 'CS 130b',
-                number: "2345",
+                number: 2345,
                 instructor: "Daniel Lohkstanov"
             })); // posted object
 

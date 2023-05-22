@@ -92,7 +92,7 @@ describe("CourseCreatePage tests", () => {
         expect(axiosMock.history.post[0].params).toEqual(
             {
                 'title': "CS 156",
-                'number': "1234",
+                'number': 1234,
                 'instructor': "Phil Conrad"
         });
 

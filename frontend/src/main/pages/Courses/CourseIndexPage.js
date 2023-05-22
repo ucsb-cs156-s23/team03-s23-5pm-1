@@ -1,38 +1,29 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button';
+import { useBackend } from 'main/utils/useBackend';
+
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CourseTable from 'main/components/Courses/CourseTable';
-import { courseUtilities } from 'main/utils/courseUtilities';
-import { useNavigate, Link } from 'react-router-dom';
-import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
-import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import axios from "axios";
-import AxiosMockAdapter from "axios-mock-adapter";
+import { useCurrentUser } from 'main/utils/currentUser'
 
 export default function CourseIndexPage() {
 
-    const navigate = useNavigate();
+    
+  const currentUser = useCurrentUser();
 
-    const courseCollection = courseUtilities.get();
-    const courses = courseCollection.courses;
-
-    const showCell = (cell) => JSON.stringify(cell.row.values);
-
-    const deleteCallback = async (cell) => {
-        console.log(`CourseIndexPage deleteCallback: ${showCell(cell)})`);
-        courseUtilities.del(cell.row.values.id);
-        navigate("/courses");
-    }
+  const { data: courses, error: _error, status: _status } =
+    useBackend(
+      // Stryker disable next-line all : don't test internal caching of React Query
+      ["/api/course/all"],
+      { method: "GET", url: "/api/course/all" },
+      []
+    );
 
     return (
         <BasicLayout>
-            <div className="pt-2">
-                <Button style={{ float: "right" }} as={Link} to="/courses/create">
-                    Create Course
-                </Button>
-                <h1>Courses</h1>
-                <CourseTable courses={courses} deleteCallback={deleteCallback} />
-            </div>
+          <div className="pt-2">
+            <h1>Courses</h1>
+            <CourseTable courses={courses} currentUser={currentUser} />
+          </div>
         </BasicLayout>
-    )
+      )
 }

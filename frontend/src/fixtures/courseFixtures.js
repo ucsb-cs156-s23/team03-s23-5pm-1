@@ -12,20 +12,20 @@ const courseFixtures = {
     threeCourses:
         [
             {
-                "id": 2,
+                "id": 1,
                 "title": "ECE 153B - SNSR/PERPH INT DSGN",
                 "number": "59261",
                 "instructor": "Electrical and Computer Engineering",
             },
 
             {
-                "id": 3,
+                "id": 2,
                 "title": "ENGL 24 - LOCAL AND GLOBAL",
                 "number": "18051",
                 "instructor": "Isla Vista",
             },
             {
-                "id": 4,
+                "id": 3,
                 "title": "PORT 105  - SURVEY OF PORT LIT",
                 "number": "51342",
                 "instructor": "Spanish and Portuguese",

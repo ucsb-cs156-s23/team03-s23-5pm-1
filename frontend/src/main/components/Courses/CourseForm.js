@@ -15,7 +15,7 @@ function CourseForm({ initialCourse, submitAction, buttonLabel="Create" }) {
 
     const navigate = useNavigate();
 
-
+    const testIdPrefix = "CourseForm";
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
@@ -24,7 +24,7 @@ function CourseForm({ initialCourse, submitAction, buttonLabel="Create" }) {
                 <Form.Group className="mb-3" >
                     <Form.Label htmlFor="id">Id</Form.Label>
                     <Form.Control
-                        data-testid="CourseForm-id"
+                        data-testid={testIdPrefix + "-id"}
                         id="id"
                         type="text"
                         {...register("id")}

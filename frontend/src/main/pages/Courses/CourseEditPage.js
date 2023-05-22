@@ -1,4 +1,3 @@
-
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
 import CourseForm from "main/components/Courses/CourseForm";
@@ -31,12 +30,12 @@ export default function CourseEditPage() {
         },
         data: {
           title: course.title,
-          number: course.nanumberme,
+          number: course.number,
           instructor: course.instructor
         }
     });
 
-    const onSuccess = (ucsbDate) => {
+    const onSuccess = (course) => {
         toast(`Course Updated - id: ${course.id} title: ${course.title}`);
     }
 
