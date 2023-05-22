@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s23/team03-s23-5pm-1
 owner: ucsb-cs156-s23
 repo_name: team03-s23-5pm-1
-pull_requests: [{"author":{"id":"MDQ6VXNlcjcyODQzNzYw","is_bot":false,"login":"zpr-ucsb","name":"Zach Richards"},"headRefName":"Zach-RestaurantBackend","number":22,"title":"Fixed backend restaurants repo to match front end","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-1/pull/22"}]
+pull_requests: []
