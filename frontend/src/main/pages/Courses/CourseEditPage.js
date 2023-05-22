@@ -53,7 +53,7 @@ export default function CourseEditPage() {
   }
 
   if (isSuccess) {
-    return <Navigate to="/course/list" />
+    return <Navigate to="/courses" />
   }
 
   return (

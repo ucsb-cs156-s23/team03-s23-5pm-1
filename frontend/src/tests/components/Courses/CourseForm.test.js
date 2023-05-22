@@ -33,6 +33,20 @@ describe("Course tests", () => {
     });
     });
 
+    test("Correct Error messages on missing input", async () => {
+        render(
+            <Router  >
+                <CourseForm />
+            </Router>
+        );
+        expect(await screen.findByTestId("CourseForm-submit")).toBeInTheDocument();
+        const submitButton = screen.getByTestId("CourseForm-submit");
+
+        fireEvent.click(submitButton);
+
+        expect(await screen.findByText(/Title is required./)).toBeInTheDocument();
+        expect(screen.getByText(/Number is required./)).toBeInTheDocument();
+    });
     test("renders correctly when passing in initialContents", async () => {
         render(
           <QueryClientProvider client={queryClient}>
@@ -47,8 +61,8 @@ describe("Course tests", () => {
           expect(header).toBeInTheDocument();
         });
     
-        expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
-        expect(screen.getByText(`Id`)).toBeInTheDocument();
+        expect(await screen.findByTestId(`${testId}-title`)).toBeInTheDocument();
+        expect(screen.getByText(`id`)).toBeInTheDocument();
       });
 
     test("that navigate(-1) is called when Cancel is clicked", async () => {

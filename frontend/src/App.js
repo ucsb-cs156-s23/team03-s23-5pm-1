@@ -58,7 +58,7 @@ function App() {
             <>
               <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
 
-              <Route exact path="/course/list" element={<CourseIndexPage />} />
+              <Route exact path="/courses" element={<CourseIndexPage />} />
 
               <Route exact path="/restaurants/list" element={<RestaurantsIndexPage />} />
 

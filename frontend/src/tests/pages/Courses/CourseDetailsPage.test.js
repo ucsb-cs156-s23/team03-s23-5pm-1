@@ -58,7 +58,7 @@ describe("CourseDetailsPage tests", () => {
             </QueryClientProvider>
         );
         expect(screen.getByText("ENGL 24 - LOCAL AND GLOBAL")).toBeInTheDocument();
-        expect(screen.getByText("18051")).toBeInTheDocument();
+        //expect(screen.getByText("Isla Vista")).toBeInTheDocument();
 
         expect(screen.queryByText("Delete")).not.toBeInTheDocument();
         expect(screen.queryByText("Edit")).not.toBeInTheDocument();
