@@ -17,7 +17,7 @@ export default function RestaurantDetailsPage() {
   let restaurantsWithId = [];
 
   (restaurants).forEach(restaurant => {
-    if(restaurant.id == id)
+    if(restaurant.id === id)
       restaurantsWithId.push(restaurant)
   });
 
