@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 
-
 const mockedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -92,7 +91,6 @@ describe("UserTable tests", () => {
     const deleteButton = getByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
-
   });
 
   test("Edit button navigates to the edit page for admin user", async () => {
@@ -115,7 +113,7 @@ describe("UserTable tests", () => {
     
     fireEvent.click(editButton);
 
-    // await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/restaurants/edit/1'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/restaurants/edit/2'));
 
   });
 
