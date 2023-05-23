@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 // get restaurants from local storage
 const get = () => {
     const restaurantValue = localStorage.getItem("restaurants");
@@ -77,6 +79,21 @@ const del = (id) => {
     set(restaurantCollection);
     return { restaurantCollection: restaurantCollection };
 };
+
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/restaurants",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
+        }
+    }
+}
+
+export function onDeleteSuccess(message) {
+    console.log(message);
+    toast(message);
+}
 
 const restaurantUtils = {
     get,
