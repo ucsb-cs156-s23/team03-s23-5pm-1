@@ -1,17 +1,43 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import CarForm from "main/components/Cars/CarForm";
-import { useNavigate } from 'react-router-dom'
-import { carUtils } from 'main/utils/carUtils';
+import { Navigate } from 'react-router-dom'
+import { useBackendMutation } from "main/utils/useBackend";
+import { toast } from "react-toastify";
 
 export default function CarCreatePage() {
 
-  let navigate = useNavigate(); 
 
-  const onSubmit = async (car) => {
-    const createdCar = carUtils.add(car);
-    console.log("createdCar: " + JSON.stringify(createdCar));
-    navigate("/cars");
-  }  
+
+  const objectToAxiosParams = (car) => ({
+    url: "/api/cars/post",
+    method: "POST",
+    params: {
+      make: car.make,
+      model: car.model,
+      year: car.year
+    }
+  });
+
+  const onSuccess = (car) => {
+    toast(`New car Created - id: ${car.id} make: ${car.make}`);
+  }
+
+  const mutation = useBackendMutation(
+    objectToAxiosParams,
+     { onSuccess }, 
+     // Stryker disable next-line all : hard to set up test for caching
+     ["/api/cars/all"]
+     );
+
+  const { isSuccess } = mutation
+
+  const onSubmit = async (data) => {
+    mutation.mutate(data);
+  }
+
+  if (isSuccess) {
+    return <Navigate to="/cars" />
+  }
 
   return (
     <BasicLayout>

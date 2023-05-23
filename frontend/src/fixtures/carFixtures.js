@@ -13,7 +13,7 @@ const carFixtures = {
     threeCars:
     [
         {
-            "id": 2,
+             "id": 1,
              "make": "Ford",
              "model": "Mustang",
              "year": "1969",
@@ -21,7 +21,7 @@ const carFixtures = {
         },
 
         {
-            "id": 3,
+            "id": 2,
              "make": "Tesla",
              "model": "Model S",
              "year": "2021",
@@ -29,7 +29,7 @@ const carFixtures = {
         },
 
         {
-            "id": 4,
+            "id": 3,
              "make": "BMW",
              "model": "M3",
              "year": "2021",

@@ -1,3 +1,6 @@
+import { toast } from "react-toastify";
+
+/*
 const get = () => {
     const carValue = localStorage.getItem("cars");
     if (carValue === undefined) {
@@ -18,8 +21,9 @@ const getById = (id) => {
     }
     const carCollection = get();
     const cars = carCollection.cars;
+    */
 
-    /* eslint-disable-next-line eqeqeq */
+    /* eslint-disable-next-line eqeqeq */ /*
     const index = cars.findIndex((r) => r.id == id);
     if (index === -1) {
         return { "error": `car with id ${id} not found`};
@@ -44,8 +48,9 @@ const add = (car) => {
 const update = (car) => {
     const carCollection = get();
     const cars = carCollection.cars;
+    */
 
-    /* eslint-disable-next-line eqeqeq */
+    /* eslint-disable-next-line eqeqeq *//*
     const index = cars.findIndex((r) => r.id == car.id);
     if (index === -1) {
         return { "error": `car with id ${car.id} not found` };
@@ -61,8 +66,9 @@ const del = (id) => {
     }
     const carCollection = get();
     const cars = carCollection.cars;
+    */
 
-    /* eslint-disable-next-line eqeqeq */
+    /* eslint-disable-next-line eqeqeq */ /*
     const index = cars.findIndex((r) => r.id == id);
     if (index === -1) {
         return { "error": `car with id ${id} not found` };
@@ -79,5 +85,26 @@ const carUtils = {
     update,
     del
 };
+
+*/
+
+
+export function onDeleteSuccess(message) {
+    console.log(message);
+    toast(message);
+}
+
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/cars",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
+        }
+    }
+}
+const carUtils = {
+};
+
 
 export { carUtils };

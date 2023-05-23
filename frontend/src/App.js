@@ -86,6 +86,8 @@ function App() {
 
               <Route exact path="/cars/edit/:id" element={<CarEditPage />} />
               <Route exact path="/cars/create" element={<CarCreatePage />} />
+              <Route exact path="/cars/details/:id" element={<CarDetailsPage />} />
+
 
             </>
           )
