@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import CourseTable, { showCell } from "main/components/Courses/CourseTable";
 import { courseFixtures } from "fixtures/courseFixtures";
 import mockConsole from "jest-mock-console";
-
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 const mockedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -15,22 +15,14 @@ jest.mock('react-router-dom', () => ({
 describe("CourseTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id","Course Title","Course Number", "Department"];
-  const expectedFields = ["id", "title", "courseNumber", "Department"];
+  const expectedHeaders = ["id","Course Title","Course Number", "Instructor"];
+  const expectedFields = ["id", "title", "number", "instructor"];
   const testId = "CourseTable";
 
-  test("showCell function works properly", () => {
-    const cell = {
-      row: {
-        values: { a: 1, b: 2, c: 3 }
-      },
-    };
-    expect(showCell(cell)).toBe(`{"a":1,"b":2,"c":3}`);
-  });
-
-  test("renders without crashing for empty table", () => {
+  test("No login renders without crashing for empty table", () => {
+    const currentUser = null;
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
         <MemoryRouter>
           <CourseTable courses={[]} />
         </MemoryRouter>
@@ -38,14 +30,34 @@ describe("CourseTable tests", () => {
     );
   });
 
+  test("User login renders without crashing for empty table", () => {
+    const currentUser = currentUserFixtures.userOnly;
+    render(
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
+        <MemoryRouter>
+          <CourseTable courses={[]} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  });
 
+  test("Admin login renders without crashing for empty table", () => {
+    const currentUser = currentUserFixtures.adminUser;
+    render(
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
+        <MemoryRouter>
+          <CourseTable courses={[]} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  });
 
-  test("Has the expected column headers, content and buttons", () => {
-
+  test("Admin Has the expected column headers, content and buttons", () => {
+    const currentUser = currentUserFixtures.adminUser;
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser = {currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -60,10 +72,10 @@ describe("CourseTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("ENGL 24 - LOCAL AND GLOBAL");
 
     const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
@@ -81,11 +93,11 @@ describe("CourseTable tests", () => {
   });
 
   test("Has the expected column headers, content and no buttons when showButtons=false", () => {
-
+    const currentUser = currentUserFixtures.adminUser;
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} showButtons={false} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser = {currentUser} showButtons={false}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -100,10 +112,10 @@ describe("CourseTable tests", () => {
       expect(header).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("3");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("ENGL 24 - LOCAL AND GLOBAL");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
@@ -112,21 +124,22 @@ describe("CourseTable tests", () => {
   });
 
 
-  test("Edit button navigates to the edit page", async () => {
+  test("Edit button navigates to the edit page for admin", async () => {
     // arrange
+    const currentUser = currentUserFixtures.adminUser;
     const restoreConsole = mockConsole();
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser={currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
 
     // assert - check that the expected content is rendered
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
     const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
@@ -136,31 +149,33 @@ describe("CourseTable tests", () => {
     fireEvent.click(editButton);
 
     // assert - check that the navigate function was called with the expected path
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/edit/2'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/edit/1'));
 
     // assert - check that the console.log was called with the expected message
     expect(console.log).toHaveBeenCalled();
     const message = console.log.mock.calls[0][0];
-    const expectedMessage = `editCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","courseNumber":"59261","Department":"Electrical and Computer Engineering"})`;
+    const expectedMessage = `editCallback: {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
     expect(message).toMatch(expectedMessage);
     restoreConsole();
   });
 
   test("Details button navigates to the details page", async () => {
+    //setupAdminUser();
     // arrange
+    const currentUser = currentUserFixtures.adminUser;
     const restoreConsole = mockConsole();
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser = {currentUser} showButtons = {true} />
         </MemoryRouter>
       </QueryClientProvider>
     );
 
     // assert - check that the expected content is rendered
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
     const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
@@ -170,17 +185,18 @@ describe("CourseTable tests", () => {
     fireEvent.click(detailsButton);
 
     // assert - check that the navigate function was called with the expected path
-    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/details/2'));
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/details/1'));
 
     // assert - check that the console.log was called with the expected message
     expect(console.log).toHaveBeenCalled();
     const message = console.log.mock.calls[0][0];
-    const expectedMessage = `detailsCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","courseNumber":"59261","Department":"Electrical and Computer Engineering"})`;
+    const expectedMessage = `detailsCallback: {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
     expect(message).toMatch(expectedMessage);
     restoreConsole();
   });
 
   test("Delete button calls delete callback", async () => {
+    const currentUser = currentUserFixtures.adminUser;
     // arrange
     const restoreConsole = mockConsole();
 
@@ -188,13 +204,13 @@ describe("CourseTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );
 
     // assert - check that the expected content is rendered
-    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2");
+    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("ECE 153B - SNSR/PERPH INT DSGN");
 
     const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
@@ -206,7 +222,7 @@ describe("CourseTable tests", () => {
      // assert - check that the console.log was called with the expected message
      await(waitFor(() => expect(console.log).toHaveBeenCalled()));
      const message = console.log.mock.calls[0][0];
-     const expectedMessage = `deleteCallback: {"id":2,"title":"ECE 153B - SNSR/PERPH INT DSGN","courseNumber":"59261","Department":"Electrical and Computer Engineering"})`;
+     const expectedMessage = `deleteCallback: {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"})`;
      expect(message).toMatch(expectedMessage);
      restoreConsole();
   });

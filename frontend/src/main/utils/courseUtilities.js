@@ -1,3 +1,6 @@
+import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom'
+/*
 const get = () => {
     const courseValue = localStorage.getItem("courses");
     if (courseValue === undefined) {
@@ -19,7 +22,7 @@ const getById = (id) => {
     const courseCollection = get();
     const courses = courseCollection.courses;
 
-    /* eslint-disable-next-line eqeqeq */
+    /* eslint-disable-next-line eqeqeq 
     const index = courses.findIndex((r) => r.id == id);
     if (index === -1) {
         return { "error": `course with id ${id} not found` };
@@ -45,7 +48,7 @@ const update = (course) => {
     const courseCollection = get();
     const courses = courseCollection.courses;
 
-    /* eslint-disable-next-line eqeqeq */
+    /* eslint-disable-next-line eqeqeq 
     const index = courses.findIndex((r) => r.id == course.id);
     if (index === -1) {
         return { "error": `course with id ${course.id} not found` };
@@ -62,7 +65,7 @@ const del = (id) => {
     const courseCollection = get();
     const courses = courseCollection.courses;
 
-    /* eslint-disable-next-line eqeqeq */
+    /* eslint-disable-next-line eqeqeq 
     const index = courses.findIndex((r) => r.id == id);
     if (index === -1) {
         return { "error": `course with id ${id} not found` };
@@ -72,6 +75,7 @@ const del = (id) => {
     return { courseCollection: courseCollection };
 };
 
+
 const courseUtilities = {
     get,
     getById,
@@ -79,5 +83,24 @@ const courseUtilities = {
     update,
     del
 };
+*/
+//export { courseUtilities };
+export function onDeleteSuccess(message) {
+    console.log(message);
+    toast(message);
+}
 
-export { courseUtilities };
+export function cellToAxiosParamsDelete(cell) {
+    return {
+        url: "/api/course",
+        method: "DELETE",
+        params: {
+            id: cell.row.values.id
+        }
+    }
+}
+
+const courseUtilities = {
+};
+
+export {courseUtilities}
