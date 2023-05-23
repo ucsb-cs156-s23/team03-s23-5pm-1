@@ -1,5 +1,16 @@
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
-import { restaurantUtils } from "main/utils/restaurantUtils";
+import { onDeleteSuccess, cellToAxiosParamsDelete, restaurantUtils } from "main/utils/restaurantUtils";
+import mockConsole from "jest-mock-console";
+
+const mockToast = jest.fn();
+jest.mock("react-toastify", () => {
+  const originalModule = jest.requireActual("react-toastify");
+  return {
+    __esModule: true,
+    ...originalModule,
+    toast: (x) => mockToast(x),
+  };
+});
 
 describe("restaurantUtils tests", () => {
     // return a function that can be used as a mock implementation of getItem
@@ -14,7 +25,6 @@ describe("restaurantUtils tests", () => {
     };
 
     describe("get", () => {
-
         test("When restaurants is undefined in local storage, should set to empty list", () => {
 
             // arrange
@@ -285,6 +295,29 @@ describe("restaurantUtils tests", () => {
             const expectedError = `id is a required parameter`
             expect(result).toEqual({ error: expectedError });
         });
+
+        test("onDeleteSuccess puts message in console.log and in a toast", () => {
+            const restoreConsole = mockConsole();
+        
+            onDeleteSuccess("abc");
+        
+            expect(mockToast).toHaveBeenCalledWith("abc");
+            expect(console.log).toHaveBeenCalledWith(expect.stringMatching("abc"));
+        
+            restoreConsole();
+          });
+        
+          test("cellToAxiosParamsDelete returns correct params", () => {
+            const cell = { row: { values: { id: 17 } } };
+        
+            const result = cellToAxiosParamsDelete(cell);
+        
+            expect(result).toEqual({
+              url: "/api/restaurants",
+              method: "DELETE",
+              params: { id: 17 },
+            });
+          });
     });
 });
 

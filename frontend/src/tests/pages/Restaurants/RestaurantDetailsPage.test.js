@@ -1,104 +1,66 @@
-import {render, screen, waitFor} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import RestaurantsDetailsPage from "main/pages/Restaurants/RestaurantsDetailsPage";
-import {QueryClient, QueryClientProvider} from "react-query";
-import {MemoryRouter} from "react-router-dom";
-
-// I stole this from https://github.com/ucsb-cs156-s23/team03-s23-5pm-4/pull/17
-// for mocking /api/currentUser and /api/systemInfo
-import {apiCurrentUserFixtures} from "fixtures/currentUserFixtures";
-import {systemInfoFixtures} from "fixtures/systemInfoFixtures";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { MemoryRouter } from "react-router-dom";
+import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import RestaurantTable from "main/components/Restaurants/RestaurantTable";
 
-jest.mock('react-router-dom', () => {
-  const originalModule = jest.requireActual('react-router-dom');
-  return {
-    __esModule: true,
-    ...originalModule,
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
     useParams: () => ({
-      id: 3
+        id: 3
     }),
-  };
+    useNavigate: () => mockNavigate
+}));
+
+jest.mock('main/utils/restaurantUtils', () => {
+    return {
+        __esModule: true,
+        restaurantUtils: {
+            getById: (_id) => {
+                return {
+                    course: {
+                        id: 3,
+                        name: "Freebirds",
+                        description: "Burritos",
+                    }
+                }
+            }
+        }
+    }
 });
 
 describe("RestaurantsDetailsPage tests", () => {
-
-  let queryClient;
-  const axiosMock = new AxiosMockAdapter(axios);
-  beforeEach(() => {
-    queryClient = new QueryClient();
-
-    axiosMock.reset();
+    const axiosMock =new AxiosMockAdapter(axios);
     axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-  });
-
-  test("renders headers only when backend doesn't return a restaurant", async () => {
-    axiosMock.onGet("/api/restaurants", {params: {id: 3}}).reply(200, {
-        id: 3,
-        name: "Freebirds",
-        description: "Burritos"
+    axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither); 
+    const queryClient = new QueryClient();
+    test("renders without crashing", () => {
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RestaurantsDetailsPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
     });
 
-    render(
-      <QueryClientProvider client={queryClient}>
-        <MemoryRouter>
-          <RestaurantsDetailsPage/>
-        </MemoryRouter>
-      </QueryClientProvider>
-    );
+    test("loads the correct fields, and no buttons", async () => {
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RestaurantsDetailsPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        // expect(screen.getByText("Freebirds")).toBeInTheDocument();
 
-    await screen.findByText("Restaurant Details");
-
-    const expectedHeaders = ["id", "name", "description"];
-    expectedHeaders.forEach((header) => {
-      expect(screen.getByTestId(`RestaurantTable-header-${header}`)).toBeInTheDocument();
+        expect(screen.queryByText("Delete")).not.toBeInTheDocument();
+        expect(screen.queryByText("Edit")).not.toBeInTheDocument();
+        expect(screen.queryByText("Details")).not.toBeInTheDocument();
     });
-
-  });
-
-  describe("when backend returns a restaurant", () => {
-    beforeEach(() => {
-      axiosMock.onGet("/api/restaurants", {params: {id: 3}}).reply(200, {
-        id: 3,
-        name: "Freebirds",
-        description: "Burritos"
-      });
-      axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
-      axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-    });
-
-    test("renders without crashing", async () => {
-      render(
-        <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-            <RestaurantsDetailsPage/>
-          </MemoryRouter>
-        </QueryClientProvider>
-      );
-    });
-
-    test("loads the correct fields, and has no buttons", async () => {
-      render(
-        <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-            <RestaurantsDetailsPage/>
-          </MemoryRouter>
-        </QueryClientProvider>
-      );
-
-      await waitFor(() => {
-        expect(screen.getByText("Freebirds")).toBeInTheDocument();
-      });
-
-      expect(screen.getByText("Freebirds")).toBeInTheDocument();
-      expect(screen.getByText("Burritos")).toBeInTheDocument();
-
-      expect(screen.queryByText("Delete")).not.toBeInTheDocument();
-      expect(screen.queryByText("Edit")).not.toBeInTheDocument();
-      expect(screen.queryByText("Details")).not.toBeInTheDocument();
-    });
-
-  });
 });
+

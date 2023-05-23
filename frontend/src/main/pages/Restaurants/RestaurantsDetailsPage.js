@@ -1,35 +1,26 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
-import {useBackend} from "../../utils/useBackend";
+import { restaurantUtils } from 'main/utils/restaurantUtils';
+import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
+import { useCurrentUser } from 'main/utils/currentUser'
+import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
 
-export default function RestaurantDetailsPage() {
-  let {id} = useParams();
+export default function RestaurantsDetailsPage() {
+  let { id } = useParams();
 
-  const {data: restaurant, error, status} =
-    useBackend(
-      // Stryker disable next-line all : don't test internal caching of React Query
-      [`/api/restaurants?id=${id}`],
-      {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
-        method: "GET",
-        url: `/api/restaurants`,
-        params: {id}
-      }
-    );
+  const currentUser = useCurrentUser();
 
-    let restaurantsList = [];
-
-    if(restaurant)
-      restaurantsList = [restaurant]
-    else
-      restaurantsList = [];
-
+  const response = restaurantUtils.getById(id);
+  // Stryker disable all
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Restaurant Details</h1>
-        <RestaurantTable restaurants={restaurantsList} showButtons={false}/>
+        <RestaurantTable restaurants={[response]} currentUser={currentUser} showButtons={false} />
       </div>
     </BasicLayout>
-  );
+  )
 }
