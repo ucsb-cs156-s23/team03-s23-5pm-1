@@ -124,10 +124,10 @@ describe("CarTable tests", () => {
     });
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("Ford");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-make`)).toHaveTextContent("Ford");
 
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-title`)).toHaveTextContent("Tesla");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-make`)).toHaveTextContent("Tesla");
 
     expect(screen.queryByText("Delete")).not.toBeInTheDocument();
     expect(screen.queryByText("Edit")).not.toBeInTheDocument();
@@ -151,7 +151,7 @@ describe("CarTable tests", () => {
 
    // assert - check that the expected content is rendered
    expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-   expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("Ford");
+   expect(screen.getByTestId(`${testId}-cell-row-0-col-make`)).toHaveTextContent("Ford");
 
    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
    expect(editButton).toBeInTheDocument();
@@ -187,7 +187,7 @@ describe("CarTable tests", () => {
 
     // assert - check that the expected content is rendered
     expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("Ford");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-make`)).toHaveTextContent("Ford");
 
     const detailsButton = screen.getByTestId(`${testId}-cell-row-0-col-Details-button`);
     expect(detailsButton).toBeInTheDocument();
@@ -222,7 +222,7 @@ describe("CarTable tests", () => {
 
     // assert - check that the expected content is rendered
     expect(await screen.findByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-title`)).toHaveTextContent("Ford");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-make`)).toHaveTextContent("Ford");
 
     const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).toBeInTheDocument();
@@ -233,7 +233,7 @@ describe("CarTable tests", () => {
      // assert - check that the console.log was called with the expected message
      await(waitFor(() => expect(console.log).toHaveBeenCalled()));
      const message = console.log.mock.calls[0][0];
-     const expectedMessage = `editCallback: {"id":1,"make":"Ford","model":"Mustang","year":"1969"})`;
+     const expectedMessage = `deleteCallback: {"id":1,"make":"Ford","model":"Mustang","year":"1969"})`;
    expect(message).toMatch(expectedMessage);
    restoreConsole();
   });

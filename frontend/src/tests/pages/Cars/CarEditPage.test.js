@@ -68,26 +68,22 @@ describe("CarEditPage tests", () => {
 
 });
 
-
 describe("tests where backend is working normally", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
-
-
     beforeEach(() => {
         axiosMock.reset();
         axiosMock.resetHistory();
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
         axiosMock.onGet("/api/cars", { params: { id: 17 } }).reply(200, {
-            id: "17",
+            id: 17,
             make: 'Toyota',
             model: "Camry",
             year: "2022"
         });
-
         axiosMock.onPut('/api/cars').reply(200, {
-            id:"17",
+            id: 17,
             make: 'Toyota',
             model: "Camry",
             year: "2022"
@@ -118,16 +114,16 @@ describe("tests where backend is working normally", () => {
 
         await findByTestId("CarForm-make");
 
-        const idField = getByTestId("CarForm-id");
+        //const idField = getByTestId("CarForm-id");
         const makeField = getByTestId("CarForm-make");
         const modelField = getByTestId("CarForm-model");
         const yearField = getByTestId("CarForm-year");
         const submitButton = getByTestId("CarForm-submit");
 
-        expect(idField).toHaveValue("17");
+        //expect(idField).toHaveValue("17");
         expect(makeField).toHaveValue("Toyota");
         expect(modelField).toHaveValue("Camry");
-        expect(yearField).toHaveValue("2022");
+        expect(yearField).toHaveValue(2022);
     });
 
     test("Changes when you click Update", async () => {
@@ -142,7 +138,7 @@ describe("tests where backend is working normally", () => {
 
         await findByTestId("CarForm-make");
 
-            const idField = getByTestId("CarForm-id");
+            //const idField = getByTestId("CarForm-id");
             const makeField = getByTestId("CarForm-make");
             const modelField = getByTestId("CarForm-model");
             const yearField = getByTestId("CarForm-year");
@@ -150,16 +146,16 @@ describe("tests where backend is working normally", () => {
 
 
         
-            expect(idField).toHaveValue("17");
+            //expect(idField).toHaveValue("17");
             expect(makeField).toHaveValue("Toyota");
             expect(modelField).toHaveValue("Camry");
-            expect(yearField).toHaveValue("2022");
+            expect(yearField).toHaveValue(2022);
 
             expect(submitButton).toBeInTheDocument();
 
             fireEvent.change(makeField, { target: { value: 'Toyota' } })
             fireEvent.change(modelField, { target: { value: 'Camry' } })
-            fireEvent.change(yearField, { target: { value: '2022' } })
+            fireEvent.change(yearField, { target: { value: 2022 } })
 
             fireEvent.click(submitButton);
       

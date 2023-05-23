@@ -24,21 +24,21 @@ export default function CarEditPage() {
     }
     );
 
-const objectToAxiosPutParams = (car) => ({
+const objectToAxiosPutParams = (Car) => ({
     url: "/api/cars",
     method: "PUT",
     params: {
-        id: car.id,
+        id: Car.id,
     },
     data: {
-        make: car.make,
-        model: car.model,
-        year: car.year
+        make: Car.make,
+        model: Car.model,
+        year: Car.year
     }
 });
 
-const onSuccess = (car) => {
-    toast(`Car Updated - id: ${car.id} make: ${car.make}`);
+const onSuccess = (Car) => {
+    toast(`Car Updated - id: ${Car.id} make: ${Car.make}`);
 }
 
 const mutation = useBackendMutation(
@@ -56,7 +56,7 @@ const onSubmit = async (data) => {
 }
 
 if (isSuccess) {
-    return <Navigate to="/cars" />
+    return <Navigate to="/cars/list" />
 }
 
     return (
@@ -64,7 +64,7 @@ if (isSuccess) {
              <div className="pt-2">
           <h1>Edit Car</h1>
           {car &&
-            <CarForm initialContents={car} submitAction={onSubmit} buttonLabel="Update" />
+            <CarForm initialCars={car} submitAction={onSubmit} buttonLabel="Update" />
           }
         </div>
       </BasicLayout>
