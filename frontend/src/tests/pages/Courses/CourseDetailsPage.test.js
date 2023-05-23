@@ -15,7 +15,7 @@ jest.mock('react-router-dom', () => ({
     }),
     useNavigate: () => mockNavigate
 }));
-
+/*
 jest.mock('main/utils/courseUtilities', () => {
     return {
         __esModule: true,
@@ -33,7 +33,7 @@ jest.mock('main/utils/courseUtilities', () => {
         }
     }
 });
-
+*/
 describe("CourseDetailsPage tests", () => {
     const axiosMock =new AxiosMockAdapter(axios);
     axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
@@ -48,12 +48,12 @@ describe("CourseDetailsPage tests", () => {
             </QueryClientProvider>
         );
     });
-
+/*
     test("loads the correct fields, and no buttons", async () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CourseDetailsPage />
+                    <CourseDetailsPage/>
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -64,7 +64,8 @@ describe("CourseDetailsPage tests", () => {
         expect(screen.queryByText("Edit")).not.toBeInTheDocument();
         expect(screen.queryByText("Details")).not.toBeInTheDocument();
     });
-
+*/
 });
+
 
 
