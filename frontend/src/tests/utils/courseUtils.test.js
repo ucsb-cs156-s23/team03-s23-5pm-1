@@ -8,7 +8,7 @@ describe("courseUtilities tests", () => {
             "row" : {"values" : {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"}}
         };
         const message = JSON.stringify(cellToAxiosParamsDelete(cell));
-        const expectedMessage = `{\"url\":\"/api/course\",\"method\":\"DELETE\",\"params\":{\"id\":1}}`;
+        const expectedMessage = `{"url":"/api/course","method":"DELETE","params":{"id":1}}`;
         expect(message).toMatch(expectedMessage);
    });
 
