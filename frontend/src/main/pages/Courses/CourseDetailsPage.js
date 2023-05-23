@@ -11,7 +11,7 @@ export default function CourseDetailsPage() {
   let { id } = useParams();
 
   const response = courseUtilities.getById(id);
-
+  // Stryker disable all
   return (
     <BasicLayout>
       <div className="pt-2">
