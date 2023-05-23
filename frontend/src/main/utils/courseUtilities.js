@@ -99,3 +99,8 @@ export function cellToAxiosParamsDelete(cell) {
         }
     }
 }
+
+const courseUtilities = {
+};
+
+export {courseUtilities}

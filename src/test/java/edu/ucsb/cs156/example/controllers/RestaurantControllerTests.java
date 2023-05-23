@@ -86,9 +86,8 @@ public class RestaurantControllerTests extends ControllerTestCase {
                 // arrange
 
                 Restaurant restaurant = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
+                                .name("Freebirds")
+                                .description("Burritos!")
                                 .build();
 
                 when(restaurantRepository.findById(eq(7L))).thenReturn(Optional.of(restaurant));
@@ -132,16 +131,14 @@ public class RestaurantControllerTests extends ControllerTestCase {
                 // arrange
 
                 Restaurant restaurant1 = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
+                                .name("Freebirds")
+                                .description("Burritos!")
                                 .build();
 
 
                 Restaurant restaurant2 = Restaurant.builder()
-                                .phoneNumber(511)
-                                .city("New York")
-                                .state("NY")
+                                .name("Chads")
+                                .description("Cafe!")
                                 .build();           
 
                 ArrayList<Restaurant> expectedDates = new ArrayList<>();
@@ -167,16 +164,15 @@ public class RestaurantControllerTests extends ControllerTestCase {
                 // arrange
 
                 Restaurant restaurant1 = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
-                                .build();       
+                                .name("Freebirds")
+                                .description("Burritos!")
+                                .build();
 
                 when(restaurantRepository.save(eq(restaurant1))).thenReturn(restaurant1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/restaurants/post?phoneNumber=911&city=Goleta&state=CA").with(csrf())).andExpect(status().isOk()).andReturn();
+                                post("/api/restaurants/post?name=Freebirds&description=Burritos!").with(csrf())).andExpect(status().isOk()).andReturn();
 
                 // assert
                 verify(restaurantRepository, times(1)).save(restaurant1);
@@ -190,11 +186,9 @@ public class RestaurantControllerTests extends ControllerTestCase {
         public void admin_can_delete_a_date() throws Exception {
                 // arrange
 
-
                 Restaurant restaurant1 = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
+                                .name("Freebirds")
+                                .description("Burritos!")
                                 .build();
 
                 when(restaurantRepository.findById(eq(15L))).thenReturn(Optional.of(restaurant1));
@@ -239,15 +233,13 @@ public class RestaurantControllerTests extends ControllerTestCase {
                 // arrange
 
                 Restaurant restaurantOrig = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
+                                .name("Freebirds")
+                                .description("Burritos!")
                                 .build();
 
                 Restaurant restaurantEdited = Restaurant.builder()
-                                .phoneNumber(511)
-                                .city("New York")
-                                .state("NY")
+                                .name("Chads")
+                                .description("Cafe!")
                                 .build();              
 
                 String requestBody = mapper.writeValueAsString(restaurantEdited);
@@ -277,9 +269,8 @@ public class RestaurantControllerTests extends ControllerTestCase {
 
 
                 Restaurant ucsbEditedDate = Restaurant.builder()
-                                .phoneNumber(911)
-                                .city("Goleta")
-                                .state("CA")
+                                .name("Freebirds")
+                                .description("Burritos!")
                                 .build();
 
                 String requestBody = mapper.writeValueAsString(ucsbEditedDate);

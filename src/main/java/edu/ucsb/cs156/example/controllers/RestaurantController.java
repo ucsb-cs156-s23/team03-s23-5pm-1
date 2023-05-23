@@ -54,14 +54,12 @@ public class RestaurantController extends ApiController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public Restaurant postRestaurant(
-        @ApiParam("phoneNumber") @RequestParam int phoneNumber,
-        @ApiParam("city") @RequestParam String city,
-        @ApiParam("state") @RequestParam String state)
+        @ApiParam("name") @RequestParam String name,
+        @ApiParam("description") @RequestParam String description)
     {
         Restaurant restaurant = new Restaurant();
-        restaurant.setPhoneNumber(phoneNumber);
-        restaurant.setCity(city);
-        restaurant.setState(state);
+        restaurant.setName(name);
+        restaurant.setDescription(description);
 
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
 
@@ -90,9 +88,8 @@ public class RestaurantController extends ApiController {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(Restaurant.class, id));
 
-        restaurant.setPhoneNumber(incoming.getPhoneNumber());
-        restaurant.setCity(incoming.getCity());
-        restaurant.setState(incoming.getState());
+        restaurant.setName(incoming.getName());
+        restaurant.setDescription(incoming.getDescription());
 
         restaurantRepository.save(restaurant);
 
