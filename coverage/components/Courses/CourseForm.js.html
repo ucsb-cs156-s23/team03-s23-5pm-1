@@ -32,7 +32,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>9/9</span>
             </div>
         
             
@@ -169,35 +169,25 @@
 <a name='L104'></a><a href='#L104'>104</a>
 <a name='L105'></a><a href='#L105'>105</a>
 <a name='L106'></a><a href='#L106'>106</a>
-<a name='L107'></a><a href='#L107'>107</a>
-<a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a>
-<a name='L110'></a><a href='#L110'>110</a>
-<a name='L111'></a><a href='#L111'>111</a>
-<a name='L112'></a><a href='#L112'>112</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L107'></a><a href='#L107'>107</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">12x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -288,29 +278,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom';
-&nbsp;
-function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
-&nbsp;
-    const navigate = useNavigate();
-    
+import { useNavigate } from 'react-router-dom'
+function CourseForm({ initialCourse, submitAction, buttonLabel="Create" }) {
     // Stryker disable all
     const {
         register,
         formState: { errors },
         handleSubmit,
     } = useForm(
-        { defaultValues: initialContents || {}, }
+        { defaultValues: initialCourse || {}, }
     );
     // Stryker enable all
-   
-    const testIdPrefix = "CourseForm";
 &nbsp;
+    const navigate = useNavigate();
+&nbsp;
+    const testIdPrefix = "CourseForm";
     return (
 &nbsp;
         &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
 &nbsp;
-            {initialContents &amp;&amp; (
+            {initialCourse &amp;&amp; (
                 &lt;Form.Group className="mb-3" &gt;
                     &lt;Form.Label htmlFor="id"&gt;Id&lt;/Form.Label&gt;
                     &lt;Form.Control
@@ -318,75 +305,73 @@ function CourseForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                         id="id"
                         type="text"
                         {...register("id")}
-                        value={initialContents.id}
+                        value={initialCourse.id}
                         disabled
                     /&gt;
                 &lt;/Form.Group&gt;
             )}
-&nbsp;
+            
             &lt;Form.Group className="mb-3" &gt;
                 &lt;Form.Label htmlFor="title"&gt;Title&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={testIdPrefix + "-title"}
+                    data-testid="CourseForm-title"
                     id="title"
                     type="text"
                     isInvalid={Boolean(errors.title)}
                     {...register("title", {
-                        required: "Title is required.",
-                        maxLength : {
-                            value: 30,
-                            message: "Max length 30 characters"
-                        }
+                        required: "Title is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.name?.message}
+                    {errors.title?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="courseNumber"&gt;Course Number&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="number"&gt;Number&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={testIdPrefix + "-courseNumber"}
-                    id="courseNumber"
-                    type="text"
-                    isInvalid={Boolean(errors.course_number)}
-                    {...register("courseNumber", {
-                        required: "Course Number is required."
-                    })}
+                    data-testid="CourseForm-number"
+                    id="number"
+                    type="number"
+                    isInvalid={Boolean(errors.number)}
+                    {...register("number", { 
+                        required: "Number is required.",
+                        valueAsNumber: true
+                     })}
+&nbsp;
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.description?.message}
+                    {errors.number &amp;&amp; 'Number is required.'}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
-                &lt;Form.Label htmlFor="Department"&gt;Department&lt;/Form.Label&gt;
+                &lt;Form.Label htmlFor="instructor"&gt;Instructor&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={testIdPrefix + "-Department"}
-                    id="Department"
+                    data-testid="CourseForm-instructor"
+                    id="instructor"
                     type="text"
-                    isInvalid={Boolean(errors.department)}
-                    {...register("Department", {
-                        required: "Department is required."
+                    isInvalid={Boolean(errors.instructor)}
+                    {...register("instructor", { 
+                        required: "Instructor is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.description?.message}
+                    {errors.instructor &amp;&amp; 'Instructor is required.'}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
 &nbsp;
             &lt;Button
                 type="submit"
-                data-testid={testIdPrefix + "-submit"}
+                data-testid={"CourseForm-submit"}
             &gt;
                 {buttonLabel}
             &lt;/Button&gt;
             &lt;Button
                 variant="Secondary"
                 onClick={() =&gt; navigate(-1)}
-                data-testid={testIdPrefix + "-cancel"}
+                data-testid={"CourseForm-cancel"}
             &gt;
                 Cancel
             &lt;/Button&gt;
@@ -403,7 +388,7 @@ export default CourseForm;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon May 22 2023 17:21:38 GMT-0700 (Pacific Daylight Time)
+                at Mon May 22 2023 19:42:06 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
