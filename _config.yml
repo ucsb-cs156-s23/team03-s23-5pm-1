@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-s23/team03-s23-5pm-1
 owner: ucsb-cs156-s23
 repo_name: team03-s23-5pm-1
-pull_requests: [{"author":{"id":"MDQ6VXNlcjgzNzk0NzE0","is_bot":false,"login":"vikram-elango","name":""},"headRefName":"Vikram-FrontendToBackend","number":29,"title":"ve- modified code to interface frontend with backend","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-1/pull/29"},{"author":{"id":"MDQ6VXNlcjcyODQzNzYw","is_bot":false,"login":"zpr-ucsb","name":"Zach Richards"},"headRefName":"Zach-FrontendUsingBackend","number":23,"title":"Added code to interface frontend with spring-boot backend","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-1/pull/23"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjcyODQzNzYw","is_bot":false,"login":"zpr-ucsb","name":"Zach Richards"},"headRefName":"Zach-FrontendUsingBackend","number":23,"title":"Added code to interface frontend with spring-boot backend","url":"https://github.com/ucsb-cs156-s23/team03-s23-5pm-1/pull/23"}]
