@@ -157,7 +157,7 @@ describe("CourseEditPage tests", () => {
 
             await waitFor(() => expect(mockToast).toBeCalled);
             expect(mockToast).toBeCalledWith("Course Updated - id: 17 title: CS 130b");
-            expect(mockNavigate).toBeCalledWith({ "to": "/course/list" });
+            expect(mockNavigate).toBeCalledWith({ "to": "/courses" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
             expect(axiosMock.history.put[0].params).toEqual({ id: 17 });

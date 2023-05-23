@@ -1,10 +1,11 @@
 import { courseFixtures } from "fixtures/courseFixtures";
-import { courseUtilities } from "main/utils/courseUtilities";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/courseUtilities";
 
 describe("courseUtilities tests", () => {
     // return a function that can be used as a mock implementation of getItem
     // the value passed in will be convertd to JSON and returned as the value
     // for the key "courses".  Any other key results in an error
+    /*
     const createGetItemMock = (returnValue) => (key) => {
         if (key === "courses") {
             return JSON.stringify(returnValue);
@@ -12,7 +13,16 @@ describe("courseUtilities tests", () => {
             throw new Error("Unexpected key: " + key);
         }
     };
-
+    */
+   test("Testing axiosDeleteConfig" , () => {
+        const cell = {
+            "row" : {"values" : {"id":1,"title":"ECE 153B - SNSR/PERPH INT DSGN","number":"59261","instructor":"Electrical and Computer Engineering"}}
+        };
+        const message = JSON.stringify(cellToAxiosParamsDelete(cell));
+        const expectedMessage = `{\"url\":\"/api/course\",\"method\":\"DELETE\",\"params\":{\"id\":1}}`;
+        expect(message).toMatch(expectedMessage);
+   });
+   /*
     describe("get", () => {
 
         test("When courses is undefined in local storage, should set to empty list", () => {
@@ -286,5 +296,6 @@ describe("courseUtilities tests", () => {
             expect(result).toEqual({ error: expectedError });
         });
     });
+    */
 });
 

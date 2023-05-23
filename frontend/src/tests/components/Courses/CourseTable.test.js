@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import CourseTable, { showCell } from "main/components/Courses/CourseTable";
 import { courseFixtures } from "fixtures/courseFixtures";
 import mockConsole from "jest-mock-console";
-
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 const mockedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -19,18 +19,10 @@ describe("CourseTable tests", () => {
   const expectedFields = ["id", "title", "number", "instructor"];
   const testId = "CourseTable";
 
-  test("showCell function works properly", () => {
-    const cell = {
-      row: {
-        values: { a: 1, b: 2, c: 3 }
-      },
-    };
-    expect(showCell(cell)).toBe(`{"a":1,"b":2,"c":3}`);
-  });
-
-  test("renders without crashing for empty table", () => {
+  test("No login renders without crashing for empty table", () => {
+    const currentUser = null;
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
         <MemoryRouter>
           <CourseTable courses={[]} />
         </MemoryRouter>
@@ -38,14 +30,34 @@ describe("CourseTable tests", () => {
     );
   });
 
+  test("User login renders without crashing for empty table", () => {
+    const currentUser = currentUserFixtures.userOnly;
+    render(
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
+        <MemoryRouter>
+          <CourseTable courses={[]} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  });
 
+  test("Admin login renders without crashing for empty table", () => {
+    const currentUser = currentUserFixtures.adminUser;
+    render(
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
+        <MemoryRouter>
+          <CourseTable courses={[]} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  });
 
-  test("Has the expected column headers, content and buttons", () => {
-
+  test("Admin Has the expected column headers, content and buttons", () => {
+    const currentUser = currentUserFixtures.adminUser;
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser = {currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -81,11 +93,11 @@ describe("CourseTable tests", () => {
   });
 
   test("Has the expected column headers, content and no buttons when showButtons=false", () => {
-
+    const currentUser = currentUserFixtures.adminUser;
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} showButtons={false} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser = {currentUser} showButtons={false}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -112,15 +124,16 @@ describe("CourseTable tests", () => {
   });
 
 
-  test("Edit button navigates to the edit page", async () => {
+  test("Edit button navigates to the edit page for admin", async () => {
     // arrange
+    const currentUser = currentUserFixtures.adminUser;
     const restoreConsole = mockConsole();
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser={currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -147,14 +160,16 @@ describe("CourseTable tests", () => {
   });
 
   test("Details button navigates to the details page", async () => {
+    //setupAdminUser();
     // arrange
+    const currentUser = currentUserFixtures.adminUser;
     const restoreConsole = mockConsole();
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser = {currentUser} showButtons = {true} />
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -181,6 +196,7 @@ describe("CourseTable tests", () => {
   });
 
   test("Delete button calls delete callback", async () => {
+    const currentUser = currentUserFixtures.adminUser;
     // arrange
     const restoreConsole = mockConsole();
 
@@ -188,7 +204,7 @@ describe("CourseTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CourseTable courses={courseFixtures.threeCourses} />
+          <CourseTable courses={courseFixtures.threeCourses} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );

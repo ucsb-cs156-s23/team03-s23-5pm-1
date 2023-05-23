@@ -97,7 +97,7 @@ describe("CourseCreatePage tests", () => {
         });
 
         expect(mockToast).toBeCalledWith("New Course Created - id: 17 title: CS 156");
-        expect(mockNavigate).toBeCalledWith({ "to": "/course/list" });
+        expect(mockNavigate).toBeCalledWith({ "to": "/courses" });
     });
 
 

@@ -86,7 +86,7 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
                     <NavDropdown.Item href="/courses" data-testid="appnavbar-course-list">List</NavDropdown.Item>
                     {
                       hasRole(currentUser, "ROLE_ADMIN") && (
-                        <NavDropdown.Item href="/course/create" data-testid="appnavbar-course-create">Create</NavDropdown.Item>
+                        <NavDropdown.Item href="/courses/create" data-testid="appnavbar-course-create">Create</NavDropdown.Item>
                       )
                     }
                   </NavDropdown>
