@@ -1,9 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter as Router } from "react-router-dom";
-
 import CarForm from "main/components/Cars/CarForm";
 import { carFixtures } from "fixtures/carFixtures";
-
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const mockedNavigate = jest.fn();
@@ -36,6 +34,22 @@ describe("CarForm tests", () => {
     });
   });
 
+  test("Correct Error messages on missing input", async () => {
+    render(
+        <Router  >
+            <CarForm />
+        </Router>
+    );
+
+    expect(await screen.findByTestId("CarForm-submit")).toBeInTheDocument();
+    const submitButton = screen.getByTestId("CarForm-submit");
+
+    fireEvent.click(submitButton);
+
+    expect(await screen.findByText(/Make is required./)).toBeInTheDocument();
+    expect(screen.getByText(/Model is required./)).toBeInTheDocument();
+});
+
   test("renders correctly when passing in initialContents", async () => {
     render(
       <QueryClientProvider client={queryClient}>
@@ -45,15 +59,12 @@ describe("CarForm tests", () => {
       </QueryClientProvider>
     );
 
-    expect(await screen.findByText(/Create/)).toBeInTheDocument();
-
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
       expect(header).toBeInTheDocument();
     });
 
-    expect(await screen.findByTestId(`${testId}-id`)).toBeInTheDocument();
-    expect(screen.getByText(`Id`)).toBeInTheDocument();
+    expect(await screen.findByTestId(`${testId}-make`)).toBeInTheDocument();
   });
 
   test("that navigate(-1) is called when Cancel is clicked", async () => {

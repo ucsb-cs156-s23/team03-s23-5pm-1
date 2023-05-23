@@ -2,10 +2,8 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
+function CarForm({ initialCars, submitAction, buttonLabel = "Create" }) {
 
-function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
-
-    const navigate = useNavigate();
     
     // Stryker disable all
     const {
@@ -13,17 +11,18 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
         formState: { errors },
         handleSubmit,
     } = useForm(
-        { defaultValues: initialContents || {}, }
+        { defaultValues: initialCars || {}, }
     );
     // Stryker enable all
-   
+    const navigate = useNavigate();
+
     const testIdPrefix = "CarForm";
 
     return (
 
         <Form onSubmit={handleSubmit(submitAction)}>
 
-            {initialContents && (
+            {initialCars && (
                 <Form.Group className="mb-3" >
                     <Form.Label htmlFor="id">Id</Form.Label>
                     <Form.Control
@@ -31,7 +30,7 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                         id="id"
                         type="text"
                         {...register("id")}
-                        value={initialContents.id}
+                        value={initialCars.id}
                         disabled
                     />
                 </Form.Group>
@@ -40,16 +39,13 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="make">Make</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-make"}
+                    data-testid={"CarForm-make"}
                     id="make"
                     type="text"
                     isInvalid={Boolean(errors.make)}
                     {...register("make", {
                         required: "Make is required.",
-                        maxLength : {
-                            value: 30,
-                            message: "Max length 30 characters"
-                        }
+
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -60,32 +56,32 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="model">Model</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-model"}
+                    data-testid={"CarForm-model"}
                     id="model"
                     type="text"
-                    isInvalid={Boolean(errors.description)}
+                    isInvalid={Boolean(errors.model)}
                     {...register("model", {
-                        required: "Model is required."
+                        required: "Model is required.",
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.model?.message}
+                    {errors.model && 'Model is required.'}
                 </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" >
                 <Form.Label htmlFor="year">Year</Form.Label>
                 <Form.Control
-                    data-testid={testIdPrefix + "-year"}
+                    data-testid={"CarForm-year"}
                     id="year"
-                    type="text"
-                    isInvalid={Boolean(errors.description)}
+                    type="number"
+                    isInvalid={Boolean(errors.year)}
                     {...register("year", {
                         required: "Year is required."
                     })}
                 />
                 <Form.Control.Feedback type="invalid">
-                    {errors.year?.message}
+                    {errors.year && 'Year is required. '}
                 </Form.Control.Feedback>
             </Form.Group>
 
@@ -93,14 +89,14 @@ function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
             <Button
                 type="submit"
-                data-testid={testIdPrefix + "-submit"}
+                data-testid={"CarForm-submit"}
             >
                 {buttonLabel}
             </Button>
             <Button
                 variant="Secondary"
                 onClick={() => navigate(-1)}
-                data-testid={testIdPrefix + "-cancel"}
+                data-testid={"CarForm-cancel"}
             >
                 Cancel
             </Button>
