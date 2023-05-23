@@ -99,3 +99,10 @@ export function cellToAxiosParamsDelete(cell) {
         }
     }
 }
+
+const courseUtilities = {
+    onDeleteSuccess,
+    cellToAxiosParamsDelete
+};
+
+export {courseUtilities}
