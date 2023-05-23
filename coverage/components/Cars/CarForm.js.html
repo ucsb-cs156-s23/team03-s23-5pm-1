@@ -30,9 +30,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.88% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>8/9</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
@@ -171,12 +171,11 @@
 <a name='L106'></a><a href='#L106'>106</a>
 <a name='L107'></a><a href='#L107'>107</a>
 <a name='L108'></a><a href='#L108'>108</a>
-<a name='L109'></a><a href='#L109'>109</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -187,11 +186,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -268,7 +274,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,8 +291,10 @@
 import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom';
-function CarForm({ initialCars, submitAction, buttonLabel = "Create" }) {
 &nbsp;
+function CarForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+&nbsp;
+    const navigate = useNavigate();
     
     // Stryker disable all
     const {
@@ -292,26 +302,25 @@ function CarForm({ initialCars, submitAction, buttonLabel = "Create" }) {
         formState: { errors },
         handleSubmit,
     } = useForm(
-        { defaultValues: initialCars || {}, }
+        { defaultValues: initialContents || {}, }
     );
     // Stryker enable all
-    const navigate = useNavigate();
-&nbsp;
+   
     const testIdPrefix = "CarForm";
 &nbsp;
     return (
 &nbsp;
         &lt;Form onSubmit={handleSubmit(submitAction)}&gt;
 &nbsp;
-            {initialCars &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >                &lt;Form.Group className="mb-3" &gt;</span>
+            {initialContents &amp;&amp; (
+                &lt;Form.Group className="mb-3" &gt;
                     &lt;Form.Label htmlFor="id"&gt;Id&lt;/Form.Label&gt;
                     &lt;Form.Control
                         data-testid={testIdPrefix + "-id"}
                         id="id"
                         type="text"
                         {...register("id")}
-                        value={initialCars.id}
+                        value={initialContents.id}
                         disabled
                     /&gt;
                 &lt;/Form.Group&gt;
@@ -320,13 +329,16 @@ function CarForm({ initialCars, submitAction, buttonLabel = "Create" }) {
             &lt;Form.Group className="mb-3" &gt;
                 &lt;Form.Label htmlFor="make"&gt;Make&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={"CarForm-make"}
+                    data-testid={testIdPrefix + "-make"}
                     id="make"
                     type="text"
                     isInvalid={Boolean(errors.make)}
                     {...register("make", {
                         required: "Make is required.",
-&nbsp;
+                        maxLength : {
+                            value: 30,
+                            message: "Max length 30 characters"
+                        }
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
@@ -337,32 +349,32 @@ function CarForm({ initialCars, submitAction, buttonLabel = "Create" }) {
             &lt;Form.Group className="mb-3" &gt;
                 &lt;Form.Label htmlFor="model"&gt;Model&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={"CarForm-model"}
+                    data-testid={testIdPrefix + "-model"}
                     id="model"
                     type="text"
-                    isInvalid={Boolean(errors.model)}
+                    isInvalid={Boolean(errors.description)}
                     {...register("model", {
-                        required: "Model is required.",
+                        required: "Model is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.model &amp;&amp; 'Model is required.'}
+                    {errors.model?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
             &lt;Form.Group className="mb-3" &gt;
                 &lt;Form.Label htmlFor="year"&gt;Year&lt;/Form.Label&gt;
                 &lt;Form.Control
-                    data-testid={"CarForm-year"}
+                    data-testid={testIdPrefix + "-year"}
                     id="year"
-                    type="number"
-                    isInvalid={Boolean(errors.year)}
+                    type="text"
+                    isInvalid={Boolean(errors.description)}
                     {...register("year", {
                         required: "Year is required."
                     })}
                 /&gt;
                 &lt;Form.Control.Feedback type="invalid"&gt;
-                    {errors.year &amp;&amp; 'Year is required. '}
+                    {errors.year?.message}
                 &lt;/Form.Control.Feedback&gt;
             &lt;/Form.Group&gt;
 &nbsp;
@@ -370,14 +382,14 @@ function CarForm({ initialCars, submitAction, buttonLabel = "Create" }) {
 &nbsp;
             &lt;Button
                 type="submit"
-                data-testid={"CarForm-submit"}
+                data-testid={testIdPrefix + "-submit"}
             &gt;
                 {buttonLabel}
             &lt;/Button&gt;
             &lt;Button
                 variant="Secondary"
                 onClick={() =&gt; navigate(-1)}
-                data-testid={"CarForm-cancel"}
+                data-testid={testIdPrefix + "-cancel"}
             &gt;
                 Cancel
             &lt;/Button&gt;
@@ -394,7 +406,7 @@ export default CarForm;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue May 23 2023 13:52:33 GMT-0700 (Pacific Daylight Time)
+                at Tue May 23 2023 14:41:32 GMT-0700 (Pacific Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
