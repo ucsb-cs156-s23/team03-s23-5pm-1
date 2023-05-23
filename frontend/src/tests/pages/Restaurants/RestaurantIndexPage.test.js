@@ -135,6 +135,35 @@ describe("RestaurantsIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
+    test("what happens when you click details, admin", async () => {
+        setupAdminUser();
+
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/restaurants/all").reply(200, restaurantFixtures.threeRestaurants);
+        axiosMock.onDelete("/api/restaurants").reply(200, "Restaurant with id 1 was shown");
+
+
+        const { getByTestId } = render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <RestaurantsIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+
+       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2"); 
+
+        const detailsButton = getByTestId(`${testId}-cell-row-0-col-Details-button`);
+        expect(detailsButton).toBeInTheDocument();
+       
+        fireEvent.click(detailsButton);
+
+        // await waitFor(() => { expect(mockToast).toBeCalledWith("Restaurant with id 1 was shown") });
+
+    });
+
     test("what happens when you click delete, admin", async () => {
         setupAdminUser();
 

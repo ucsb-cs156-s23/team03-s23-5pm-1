@@ -9,6 +9,7 @@ import {apiCurrentUserFixtures} from "fixtures/currentUserFixtures";
 import {systemInfoFixtures} from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
+import RestaurantTable from "main/components/Restaurants/RestaurantTable";
 
 jest.mock('react-router-dom', () => {
   const originalModule = jest.requireActual('react-router-dom');
@@ -64,6 +65,8 @@ describe("RestaurantsDetailsPage tests", () => {
         name: "Freebirds",
         description: "Burritos"
       });
+      axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+      axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     });
 
     test("renders without crashing", async () => {
