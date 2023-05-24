@@ -8,7 +8,7 @@ import { useBackend } from 'main/utils/useBackend';
 //import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 //import axios from "axios";
 //import AxiosMockAdapter from "axios-mock-adapter";
-//Stryker disable all
+
 export default function CourseDetailsPage() {
   let { id } = useParams();
 
@@ -27,6 +27,7 @@ export default function CourseDetailsPage() {
         id
       }
     },
+    // Stryker disable next-line all
     []
   );
     //console.log(course)

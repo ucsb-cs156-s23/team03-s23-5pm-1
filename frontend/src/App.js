@@ -25,7 +25,7 @@ import CarDetailsPage from "main/pages/Cars/CarDetailsPage";
 import RestaurantsIndexPage from "main/pages/Restaurants/RestaurantsIndexPage";
 import RestaurantsCreatePage from "main/pages/Restaurants/RestaurantsCreatePage";
 import RestaurantsEditPage from "main/pages/Restaurants/RestaurantsEditPage";
-
+import RestaurantsDetailsPage from "main/pages/Restaurants/RestaurantsDetailsPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
@@ -82,6 +82,7 @@ function App() {
               <Route exact path="/courses/details/:id" element={<CourseDetailsPage />} />
               
               <Route exact path="/restaurants/edit/:id" element={<RestaurantsEditPage />} />
+              <Route exact path="/restaurants/details/:id" element={<RestaurantsDetailsPage />} />
               <Route exact path="/restaurants/create" element={<RestaurantsCreatePage />} />
 
               <Route exact path="/cars/edit/:id" element={<CarEditPage />} />

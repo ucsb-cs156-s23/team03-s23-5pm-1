@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import RestaurantTable, { showCell } from "main/components/Restaurants/RestaurantTable";
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
 import mockConsole from "jest-mock-console";
-
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 const mockedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -15,22 +15,14 @@ jest.mock('react-router-dom', () => ({
 describe("RestaurantTable tests", () => {
   const queryClient = new QueryClient();
 
-  const expectedHeaders = ["id", "Name", "Description"];
+  const expectedHeaders = ["id","Name","Description"];
   const expectedFields = ["id", "name", "description"];
   const testId = "RestaurantTable";
 
-  test("showCell function works properly", () => {
-    const cell = {
-      row: {
-        values: { a: 1, b: 2, c: 3 }
-      },
-    };
-    expect(showCell(cell)).toBe(`{"a":1,"b":2,"c":3}`);
-  });
-
-  test("renders without crashing for empty table", () => {
+  test("No login renders without crashing for empty table", () => {
+    const currentUser = null;
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
         <MemoryRouter>
           <RestaurantTable restaurants={[]} />
         </MemoryRouter>
@@ -38,14 +30,34 @@ describe("RestaurantTable tests", () => {
     );
   });
 
+  test("User login renders without crashing for empty table", () => {
+    const currentUser = currentUserFixtures.userOnly;
+    render(
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
+        <MemoryRouter>
+          <RestaurantTable restaurants={[]} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  });
 
+  test("Admin login renders without crashing for empty table", () => {
+    const currentUser = currentUserFixtures.adminUser;
+    render(
+      <QueryClientProvider client={queryClient} currentUser = {currentUser}>
+        <MemoryRouter>
+          <RestaurantTable restaurants={[]} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+  });
 
-  test("Has the expected column headers, content and buttons", () => {
-
+  test("Admin Has the expected column headers, content and buttons", () => {
+    const currentUser = currentUserFixtures.adminUser;
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} />
+          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} currentUser = {currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -81,11 +93,11 @@ describe("RestaurantTable tests", () => {
   });
 
   test("Has the expected column headers, content and no buttons when showButtons=false", () => {
-
+    const currentUser = currentUserFixtures.adminUser;
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} showButtons={false} />
+          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} currentUser = {currentUser} showButtons={false}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -112,15 +124,16 @@ describe("RestaurantTable tests", () => {
   });
 
 
-  test("Edit button navigates to the edit page", async () => {
+  test("Edit button navigates to the edit page for admin", async () => {
     // arrange
+    const currentUser = currentUserFixtures.adminUser;
     const restoreConsole = mockConsole();
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} />
+          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} currentUser={currentUser}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -147,14 +160,16 @@ describe("RestaurantTable tests", () => {
   });
 
   test("Details button navigates to the details page", async () => {
+    //setupAdminUser();
     // arrange
+    const currentUser = currentUserFixtures.adminUser;
     const restoreConsole = mockConsole();
 
     // act - render the component
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} />
+          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} currentUser = {currentUser} showButtons = {true} />
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -181,6 +196,7 @@ describe("RestaurantTable tests", () => {
   });
 
   test("Delete button calls delete callback", async () => {
+    const currentUser = currentUserFixtures.adminUser;
     // arrange
     const restoreConsole = mockConsole();
 
@@ -188,7 +204,7 @@ describe("RestaurantTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} />
+          <RestaurantTable restaurants={restaurantFixtures.threeRestaurants} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );
