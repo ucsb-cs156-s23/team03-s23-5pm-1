@@ -1,19 +1,12 @@
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
+import { useBackendMutation } from "main/utils/useBackend";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/courseUtilities"
 import { useNavigate } from "react-router-dom";
-import { courseUtilities } from "main/utils/courseUtilities";
-
+import { hasRole } from "main/utils/currentUser";
 const showCell = (cell) => JSON.stringify(cell.row.values);
-
-
-const defaultDeleteCallback = async (cell) => {
-    console.log(`deleteCallback: ${showCell(cell)})`);
-    courseUtilities.del(cell.row.values.id);
-}
-
 export default function CourseTable({
-    courses,
-    deleteCallback = defaultDeleteCallback,
+    courses, currentUser,
     showButtons = true,
     testIdPrefix = "CourseTable" }) {
 
@@ -28,7 +21,21 @@ export default function CourseTable({
         console.log(`detailsCallback: ${showCell(cell)})`);
         navigate(`/courses/details/${cell.row.values.id}`)
     }
+    // Stryker disable next-line all
+    const deleteMutation = useBackendMutation(
+        cellToAxiosParamsDelete,
+        { onSuccess: onDeleteSuccess },
+        // Stryker disable next-line all
+        ["/api/course/all"]
+    );
+    // Stryker enable all 
 
+    // Stryker disable next-line all : TODO try to make a good test for this
+    const deleteCallback = async (cell) => { 
+        console.log(`deleteCallback: ${showCell(cell)})`);
+        deleteMutation.mutate(cell); 
+    }
+    
     const columns = [
         {
             Header: 'id',
@@ -41,28 +48,29 @@ export default function CourseTable({
         },
         {
             Header: 'Course Number',
-            accessor: 'courseNumber',
+            accessor: 'number',
         },
         {
-            Header: 'Department',
-            accessor: 'Department',
+            Header: 'Instructor',
+            accessor: 'instructor',
         }
     ];
 
-    const buttonColumns = [
-        ...columns,
-        ButtonColumn("Details", "primary", detailsCallback, testIdPrefix),
-        ButtonColumn("Edit", "primary", editCallback, testIdPrefix),
-        ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix),
-    ]
+    if (showButtons && hasRole(currentUser, "ROLE_ADMIN")) {
+		columns.push(ButtonColumn("Details", "primary", detailsCallback, testIdPrefix ));
+		columns.push(ButtonColumn("Edit", "primary", editCallback, testIdPrefix ));
+		columns.push(ButtonColumn("Delete", "danger", deleteCallback, testIdPrefix ));
+	}
 
-    const columnsToDisplay = showButtons ? buttonColumns : columns;
+	// Stryker disable next-line ArrayDeclaration : [columns] is a performance optimization
+	const memoizedColumns = React.useMemo(() => columns, [columns]);
+	const memoizedCourses = React.useMemo(() => courses, [courses]);
 
-    return <OurTable
-        data={courses}
-        columns={columnsToDisplay}
-        testid={testIdPrefix}
-    />;
+	return <OurTable
+		data={memoizedCourses}
+		columns={memoizedColumns}
+		testid={testIdPrefix }
+	/>;
 };
 
-export { showCell };
+//export { showCell };

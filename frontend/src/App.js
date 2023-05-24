@@ -15,6 +15,7 @@ import UCSBDatesEditPage from "main/pages/UCSBDates/UCSBDatesEditPage";
 import CourseIndexPage from "main/pages/Courses/CourseIndexPage";
 import CourseCreatePage from "main/pages/Courses/CourseCreatePage";
 import CourseEditPage from "main/pages/Courses/CourseEditPage";
+import CourseDetailsPage from "main/pages/Courses/CourseDetailsPage";
 
 import CarCreatePage from "main/pages/Cars/CarCreatePage";
 import CarEditPage from "main/pages/Cars/CarEditPage";
@@ -58,7 +59,9 @@ function App() {
             <>
               <Route exact path="/ucsbdates/list" element={<UCSBDatesIndexPage />} />
 
-              <Route exact path="/course/list" element={<CourseIndexPage />} />
+              <Route exact path="/courses" element={<CourseIndexPage />} />
+
+              
 
               <Route exact path="/restaurants/list" element={<RestaurantsIndexPage />} />
 
@@ -74,9 +77,10 @@ function App() {
               <Route exact path="/ucsbdates/edit/:id" element={<UCSBDatesEditPage />} />
               <Route exact path="/ucsbdates/create" element={<UCSBDatesCreatePage />} />
 
-              <Route exact path="/course/edit/:id" element={<CourseEditPage />} />
-              <Route exact path="/course/create" element={<CourseCreatePage />} />
-
+              <Route exact path="/courses/edit/:id" element={<CourseEditPage />} />
+              <Route exact path="/courses/create" element={<CourseCreatePage />} />
+              <Route exact path="/courses/details/:id" element={<CourseDetailsPage />} />
+              
               <Route exact path="/restaurants/edit/:id" element={<RestaurantsEditPage />} />
               <Route exact path="/restaurants/details/:id" element={<RestaurantsDetailsPage />} />
               <Route exact path="/restaurants/create" element={<RestaurantsCreatePage />} />
