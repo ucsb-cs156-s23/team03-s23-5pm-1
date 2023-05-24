@@ -1,10 +1,8 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
 import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import { useCurrentUser } from 'main/utils/currentUser'
-
 
 export default function RestaurantIndexPage() {
 

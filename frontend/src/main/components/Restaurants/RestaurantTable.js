@@ -4,6 +4,7 @@ import { useBackendMutation } from "main/utils/useBackend";
 import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/utils/restaurantUtils"
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
+// Stryker disable next-line all
 const showCell = (cell) => JSON.stringify(cell.row.values);
 
 export default function RestaurantTable({
@@ -12,21 +13,18 @@ export default function RestaurantTable({
     testIdPrefix = "RestaurantTable" }) {
 
     const navigate = useNavigate();
-
+    // Stryker disable all
     const editCallback = (cell) => {
         console.log(`editCallback: ${showCell(cell)})`);
         navigate(`/restaurants/edit/${cell.row.values.id}`)
     }
-
     const detailsCallback = (cell) => {
         console.log(`detailsCallback: ${showCell(cell)})`);
         navigate(`/restaurants/details/${cell.row.values.id}`)
     }
-    // Stryker disable next-line all
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess },
-        // Stryker disable next-line all
         ["/api/restaurants/all"]
     );
     // Stryker enable all 

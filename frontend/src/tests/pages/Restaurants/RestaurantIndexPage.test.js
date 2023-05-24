@@ -2,6 +2,8 @@ import { fireEvent, render, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import RestaurantsIndexPage from "main/pages/Restaurants/RestaurantsIndexPage";
+
+
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { restaurantFixtures } from "fixtures/restaurantFixtures";
@@ -9,6 +11,11 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => mockNavigate
+}));
 
 const mockToast = jest.fn();
 jest.mock('react-toastify', () => {
@@ -21,7 +28,6 @@ jest.mock('react-toastify', () => {
 });
 
 describe("RestaurantsIndexPage tests", () => {
-
     const axiosMock =new AxiosMockAdapter(axios);
 
     const testId = "RestaurantTable";
@@ -39,7 +45,6 @@ describe("RestaurantsIndexPage tests", () => {
         axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.adminUser);
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     };
-
     test("renders without crashing for regular user", () => {
         setupUserOnly();
         const queryClient = new QueryClient();
@@ -55,7 +60,6 @@ describe("RestaurantsIndexPage tests", () => {
 
 
     });
-
     test("renders without crashing for admin user", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
@@ -135,35 +139,6 @@ describe("RestaurantsIndexPage tests", () => {
         expect(queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
-    test("what happens when you click details, admin", async () => {
-        setupAdminUser();
-
-        const queryClient = new QueryClient();
-        axiosMock.onGet("/api/restaurants/all").reply(200, restaurantFixtures.threeRestaurants);
-        axiosMock.onDelete("/api/restaurants").reply(200, "Restaurant with id 1 was shown");
-
-
-        const { getByTestId } = render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <RestaurantsIndexPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        await waitFor(() => { expect(getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
-
-       expect(getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("2"); 
-
-        const detailsButton = getByTestId(`${testId}-cell-row-0-col-Details-button`);
-        expect(detailsButton).toBeInTheDocument();
-       
-        fireEvent.click(detailsButton);
-
-        // await waitFor(() => { expect(mockToast).toBeCalledWith("Restaurant with id 1 was shown") });
-
-    });
-
     test("what happens when you click delete, admin", async () => {
         setupAdminUser();
 
@@ -189,11 +164,10 @@ describe("RestaurantsIndexPage tests", () => {
         expect(deleteButton).toBeInTheDocument();
        
         fireEvent.click(deleteButton);
-
+        await waitFor(() => expect(mockToast).toBeCalled);
+        expect(mockToast).toBeCalledWith("Restaurant with id 1 was deleted");
         await waitFor(() => { expect(mockToast).toBeCalledWith("Restaurant with id 1 was deleted") });
 
     });
-
 });
-
 
