@@ -1,25 +1,34 @@
+import { useBackend, useBackendMutation } from "main/utils/useBackend";
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { useParams } from "react-router-dom";
-import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
-import { restaurantUtils } from 'main/utils/restaurantUtils';
-import { apiCurrentUserFixtures }  from "fixtures/currentUserFixtures";
 import { useCurrentUser } from 'main/utils/currentUser'
-import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import axios from "axios";
-import AxiosMockAdapter from "axios-mock-adapter";
+import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
 
-export default function RestaurantsDetailsPage() {
+// Stryker disable all
+export default function RestaurantDetailsPage() {
   let { id } = useParams();
 
   const currentUser = useCurrentUser();
 
-  const response = restaurantUtils.getById(id);
-  // Stryker disable all
+  const { data: restaurant, error:_error, status:_status } =
+  useBackend(
+    // Stryker disable next-line all : don't test internal caching of React Query
+    [`/api/restaurants?id=${id}`],
+    {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
+      method: "GET",
+      url: `/api/restaurants`,
+      params: {
+        id
+      }
+    },
+    []
+  );
+
   return (
     <BasicLayout>
       <div className="pt-2">
         <h1>Restaurant Details</h1>
-        <RestaurantTable restaurants={[response]} currentUser={currentUser} showButtons={false} />
+        <RestaurantTable restaurants={[restaurant]} currentUser={currentUser} showButtons={false} />
       </div>
     </BasicLayout>
   )
