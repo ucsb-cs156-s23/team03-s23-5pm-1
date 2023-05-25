@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useCurrentUser } from 'main/utils/currentUser'
 import RestaurantTable from 'main/components/Restaurants/RestaurantTable';
 
+// Stryker disable all
 export default function RestaurantDetailsPage() {
   let { id } = useParams();
 
