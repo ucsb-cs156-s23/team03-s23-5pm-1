@@ -36,7 +36,7 @@ export default function CarCreatePage() {
   }
 
   if (isSuccess) {
-    return <Navigate to="/cars" />
+    return <Navigate to="/cars/list" />
   }
 
   return (

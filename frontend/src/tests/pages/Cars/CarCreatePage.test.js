@@ -100,7 +100,7 @@ describe("CarCreatePage tests", () => {
             });
     
             expect(mockToast).toBeCalledWith("New car Created - id: 17 make: Toyota");
-            expect(mockNavigate).toBeCalledWith({ "to": "/cars" });
+            expect(mockNavigate).toBeCalledWith({ "to": "/cars/list" });
         });
 
         });
